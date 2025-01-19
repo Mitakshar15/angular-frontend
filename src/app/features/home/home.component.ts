@@ -44,27 +44,27 @@ export class HomeComponent {
   featuredCatalogs: Catalog[] = [
     {
       id: 'women',
-      name: 'Women\'s Fashion',
+      name: 'Women\'s Collection',
       description: 'Discover the latest trends in women\'s fashion',
       imageUrl: 'https://img.freepik.com/free-photo/stylish-woman-summer-outfit-isolated-posing-fashion-trend-isolated_285396-472.jpg',
-      route: '/women',
-      productCount: 1200
+      route: '/products',
+      productCount: 150
     },
     {
       id: 'men',
       name: 'Men\'s Collection',
-      description: 'Explore our premium men\'s collection',
+      description: 'Explore our curated men\'s fashion line',
       imageUrl: 'https://img.freepik.com/free-photo/full-length-portrait-handsome-serious-man_171337-17388.jpg',
-      route: '/men',
-      productCount: 850
+      route: '/products',
+      productCount: 120
     },
     {
       id: 'accessories',
       name: 'Accessories',
       description: 'Complete your look with our accessories',
       imageUrl: 'https://img.freepik.com/free-photo/accessories-men-watch-wallet-pen-cufflinks_107420-95773.jpg',
-      route: '/accessories',
-      productCount: 500
+      route: '/products',
+      productCount: 80
     }
   ];
 

@@ -1,0 +1,75 @@
+<div class="products-container">
+  <!-- Filters Sidebar -->
+  <aside class="filters-sidebar">
+    <div class="filters-header">
+      <h3>Filters</h3>
+      <button class="clear-filters" (click)="clearFilters()">Clear All</button>
+    </div>
+
+    <!-- Price Range Filter -->
+    <div class="filter-section">
+      <h4>Price Range</h4>
+      <div class="price-ranges">
+        <div *ngFor="let range of priceRanges" class="price-range-option">
+          <input type="radio" 
+                 [id]="'price-' + range.min" 
+                 name="priceRange" 
+                 [checked]="activeFilters.priceRange?.min === range.min"
+                 (change)="updatePriceRange(range)">
+          <label [for]="'price-' + range.min">{{range.label}}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand Filter -->
+    <div class="filter-section">
+      <h4>Brands</h4>
+      <div class="brand-options">
+        <div *ngFor="let brand of availableBrands" class="brand-option">
+          <input type="checkbox" 
+                 [id]="'brand-' + brand"
+                 [checked]="activeFilters.brands?.includes(brand)"
+                 (change)="handleBrandFilterChange($event, brand)">
+          <label [for]="'brand-' + brand">{{brand}}</label>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Products Grid Section -->
+  <main class="products-main">
+    <!-- Sort and Results Info -->
+    <div class="products-header">
+      <div class="results-info">
+        Showing {{filteredProducts.length}} results
+        <span *ngIf="activeFilters.category">in {{activeFilters.category}}</span>
+      </div>
+      
+      <div class="sort-section">
+        <label for="sort">Sort by:</label>
+        <select id="sort" (change)="handleSortChange($event)">
+          <option value="">Relevance</option>
+          <option *ngFor="let option of sortOptions" 
+                  [value]="option.value"
+                  [selected]="activeFilters.sortBy === option.value">
+            {{option.label}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid">
+      <app-product-card *ngFor="let product of filteredProducts"
+                       [product]="product">
+      </app-product-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredProducts.length === 0" class="empty-state">
+      <i class="fas fa-box-open"></i>
+      <h3>No Products Found</h3>
+      <p>Try adjusting your filters or browse our other categories</p>
+    </div>
+  </main>
+</div> 
