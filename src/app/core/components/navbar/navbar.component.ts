@@ -14,16 +14,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent {
   cartItemCount = 0;
-  isSignedIn = false; // Flag to check if user is signed in
+  isSignedIn = false;
 
   constructor(
     private dialog: MatDialog,
     private authService: AuthService
   ) {
-    // Update isSignedIn based on auth status
-    this.authService.currentUser$.subscribe(user => {
-      this.isSignedIn = !!user;
-    });
+    // Subscribe to auth state changes
+    this.authService.isSignedIn$.subscribe(
+      isSignedIn => this.isSignedIn = isSignedIn
+    );
   }
 
   signIn() {
@@ -33,14 +33,14 @@ export class NavbarComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.isSignedIn = true;
+      // No need to manually set isSignedIn, AuthService handles it
+      if (result === true) {
+        console.log('Successfully signed in');
       }
     });
   }
 
   signOut() {
     this.authService.logout();
-    this.isSignedIn = false;
   }
 }
