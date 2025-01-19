@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { FormsModule } from '@angular/forms';
-import { ProductService, Product, ProductFilter } from '../../core/services/product.service';
+import { ProductService, ProductFilter } from '../../core/services/product.service';
+import { Product } from '../../shared/models/product.model';
 
 @Component({
   selector: 'app-products',
@@ -66,7 +67,15 @@ export class ProductsComponent implements OnInit {
     this.productService.getFilteredProducts(this.activeFilters)
       .subscribe({
         next: (response) => {
-          this.products = response.products;
+          this.products = response.products.map(p => ({
+            id: p.id,
+            name: p.title,
+            description: p.description,
+            price: p.discountedPrice || p.price,
+            imageUrl: p.imageUrl,
+            brand: p.brand,
+            originalPrice: p.price
+          }));
           this.totalItems = response.totalItems;
           this.currentPage = response.currentPage;
         },
