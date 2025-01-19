@@ -79,18 +79,34 @@
     </div>
 
     <!-- Pagination -->
-    <div class="pagination" *ngIf="totalItems > 0">
-      <button 
-        [disabled]="currentPage === 1"
-        (click)="changePage(currentPage - 1)">
-        Previous
-      </button>
-      <span>Page {{currentPage}} of {{Math.ceil(totalItems / pageSize)}}</span>
-      <button 
-        [disabled]="currentPage >= Math.ceil(totalItems / pageSize)"
-        (click)="changePage(currentPage + 1)">
-        Next
-      </button>
+    <div class="pagination-container" *ngIf="totalItems > 0">
+      <div class="pagination">
+        <button 
+          class="pagination-btn" 
+          [ngClass]="{'disabled': currentPage === 1}"
+          [disabled]="currentPage === 1"
+          (click)="changePage(currentPage - 1)"
+          aria-label="Previous page">
+          <i class="fas fa-chevron-left"></i>
+          <span>Previous</span>
+        </button>
+        
+        <div class="pagination-info">
+          <span class="current-page">{{currentPage}}</span>
+          <span class="separator">/</span>
+          <span class="total-pages">{{Math.ceil(totalItems / pageSize)}}</span>
+        </div>
+    
+        <button 
+          class="pagination-btn"
+          [ngClass]="{'disabled': currentPage >= Math.ceil(totalItems / pageSize)}"
+          [disabled]="currentPage >= Math.ceil(totalItems / pageSize)"
+          (click)="changePage(currentPage + 1)"
+          aria-label="Next page">
+          <span>Next</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
     </div>
 
     <!-- Empty State -->
