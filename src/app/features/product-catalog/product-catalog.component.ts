@@ -10,7 +10,7 @@ import { HomeComponent } from '../home/home.component';
   templateUrl: './product-catalog.component.html',
   styleUrls: ['./product-catalog.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatCardModule, ProductCardComponent,HomeComponent]
+  imports: [CommonModule, MatGridListModule, MatCardModule, ProductCardComponent]
 })
 export class ProductCatalogComponent {
   products = [

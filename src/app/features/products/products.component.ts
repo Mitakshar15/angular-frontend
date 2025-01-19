@@ -25,7 +25,7 @@ export class ProductsComponent implements OnInit {
       name: 'Classic White T-Shirt',
       description: 'Essential cotton t-shirt',
       price: 29.99,
-      imageUrl: 'assets/images/products/tshirt.jpg',
+      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/l5h2xe80/kurta/x/6/n/xl-kast-tile-green-majestic-man-original-imagg4z33hu4kzpv.jpeg?q=70',
       brand: 'Essential Wear',
       category: 'men'
     },
@@ -34,7 +34,7 @@ export class ProductsComponent implements OnInit {
       name: 'Floral Summer Dress',
       description: 'Light and breezy summer dress',
       price: 59.99,
-      imageUrl: 'assets/images/products/dress.jpg',
+      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/l/f/r/xl-k-spl668-yellow-sg-leman-original-imagznqcrahgq9rf.jpeg?q=70',
       brand: 'Fashion Elite',
       category: 'women'
     },
@@ -43,7 +43,7 @@ export class ProductsComponent implements OnInit {
       name: 'Leather Handbag',
       description: 'Classic leather handbag',
       price: 89.99,
-      imageUrl: 'assets/images/products/handbag.jpg',
+      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/g/6/k/m-sksh-dt1105-pcbl-fubar-original-imafux247zhqym2z-bb.jpeg?q=70',
       brand: 'Luxury Brand',
       category: 'accessories'
     },
@@ -52,7 +52,7 @@ export class ProductsComponent implements OnInit {
       name: 'Men\'s Denim Jeans',
       description: 'Classic fit denim jeans',
       price: 79.99,
-      imageUrl: 'assets/images/products/jeans.jpg',
+      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/i/v/x/xxl-br-ad-kt-105-adwyn-peter-original-imagj4zyd2q7t6cg.jpeg?q=70',
       brand: 'Essential Wear',
       category: 'men'
     },
@@ -61,7 +61,7 @@ export class ProductsComponent implements OnInit {
       name: 'Women\'s Blazer',
       description: 'Professional women\'s blazer',
       price: 129.99,
-      imageUrl: 'assets/images/products/blazer.jpg',
+      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/j/a/r/l-poch521835-peter-england-original-imag7jg47g7cxhg3-bb.jpeg?q=70',
       brand: 'Fashion Elite',
       category: 'women'
     }

@@ -35,7 +35,7 @@ export class HomeComponent {
       subtitle: 'Check out our latest arrivals'
     },
     {
-      image: 'assets/images/banner3.jpg',
+      image: 'https://img.freepik.com/free-photo/skeptical-disappointed-years-old-man-casual-outfit-dislike-something-bad-showing-thumbsdown_1258-155030.jpg?t=st=1737287013~exp=1737290613~hmac=52da77d06687ee1a9994e6f15d35ba78beaaf542d16f469a1c900a40da0da600&w=1380',
       title: 'Summer Sale',
       subtitle: 'Get ready for summer with our exclusive collection'
     }
