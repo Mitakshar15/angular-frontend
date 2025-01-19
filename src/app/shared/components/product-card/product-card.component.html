@@ -1,0 +1,25 @@
+<div class="product-card">
+  <div class="product-image">
+    <img [src]="product.imageUrl" [alt]="product.name">
+    <div class="product-actions">
+      <button class="action-button">
+        <i class="fas fa-heart"></i>
+      </button>
+      <button class="action-button add-to-cart">
+        Add to Cart
+      </button>
+      <button class="action-button">
+        <i class="fas fa-expand"></i>
+      </button>
+    </div>
+  </div>
+  
+  <div class="product-info">
+    <h3 class="product-name">{{product.name}}</h3>
+    <p class="product-brand">{{product.brand}}</p>
+    <div class="product-price">
+      <span class="current-price">${{product.price}}</span>
+      <span class="original-price" *ngIf="product.originalPrice">${{product.originalPrice}}</span>
+    </div>
+  </div>
+</div>

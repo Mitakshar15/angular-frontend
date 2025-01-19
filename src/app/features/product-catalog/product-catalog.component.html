@@ -1,0 +1,7 @@
+<div class="catalog-container">
+  <div class="catalog-grid">
+    <div *ngFor="let product of products" class="product-item">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  </div>
+</div>

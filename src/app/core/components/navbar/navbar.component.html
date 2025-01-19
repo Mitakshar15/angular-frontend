@@ -1,0 +1,28 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <a routerLink="/" class="logo">FASHION<span>HUB</span></a>
+    </div>
+    
+    <div class="navbar-menu">
+      <a routerLink="/women" class="nav-link">Women</a>
+      <a routerLink="/men" class="nav-link">Men</a>
+      <a routerLink="/accessories" class="nav-link">Accessories</a>
+      <a routerLink="/new-arrivals" class="nav-link">New Arrivals</a>
+      <a routerLink="/sale" class="nav-link">Sale</a>
+    </div>
+
+    <div class="navbar-actions">
+      <button class="icon-button">
+        <i class="fas fa-search"></i>
+      </button>
+      <button class="icon-button">
+        <i class="fas fa-user"></i>
+      </button>
+      <button class="icon-button cart-button">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count" *ngIf="cartItemCount > 0">{{cartItemCount}}</span>
+      </button>
+    </div>
+  </div>
+</nav>

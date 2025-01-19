@@ -1,0 +1,33 @@
+<div class="home-container">
+  <!-- Banner Carousel -->
+  <section class="banner-section">
+    <owl-carousel-o [options]="carouselOptions">
+      <ng-container *ngFor="let banner of banners">
+        <ng-template carouselSlide>
+          <div class="banner-slide" [style.background-image]="'url(' + banner.image + ')'">
+            <div class="banner-content">
+              <h2>{{ banner.title }}</h2>
+              <p>{{ banner.subtitle }}</p>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured-section">
+    <h2>Featured Products</h2>
+    <div class="featured-products">
+      <div *ngFor="let product of featuredProducts" class="featured-item">
+        <app-product-card [product]="product"></app-product-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Catalog Section -->
+  <section class="catalog-section">
+    <h2>Our Products</h2>
+    <app-product-catalog></app-product-catalog>
+  </section>
+</div>

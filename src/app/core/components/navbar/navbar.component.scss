@@ -1,0 +1,92 @@
+.navbar {
+  background: var(--background-light);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  
+  .navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar-brand {
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      
+      span {
+        color: var(--accent-color);
+      }
+    }
+  }
+
+  .navbar-menu {
+    display: flex;
+    gap: var(--spacing-xl);
+    
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+      
+      &:hover:after {
+        width: 100%;
+      }
+    }
+  }
+
+  .navbar-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    
+    .icon-button {
+      background: none;
+      border: none;
+      padding: var(--spacing-sm);
+      cursor: pointer;
+      position: relative;
+      
+      i {
+        font-size: 1.2rem;
+        color: var(--text-primary);
+      }
+    }
+
+    .cart-button {
+      .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: var(--accent-color);
+        color: white;
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
