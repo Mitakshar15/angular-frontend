@@ -14,23 +14,37 @@
           <input type="radio" 
                  [id]="'price-' + range.min" 
                  name="priceRange" 
-                 [checked]="activeFilters.priceRange?.min === range.min"
+                 [checked]="activeFilters.minPrice === range.min && activeFilters.maxPrice === range.max"
                  (change)="updatePriceRange(range)">
           <label [for]="'price-' + range.min">{{range.label}}</label>
         </div>
       </div>
     </div>
 
-    <!-- Brand Filter -->
+    <!-- Color Filter -->
     <div class="filter-section">
-      <h4>Brands</h4>
-      <div class="brand-options">
-        <div *ngFor="let brand of availableBrands" class="brand-option">
+      <h4>Colors</h4>
+      <div class="color-options">
+        <div *ngFor="let color of availableColors" class="color-option">
           <input type="checkbox" 
-                 [id]="'brand-' + brand"
-                 [checked]="activeFilters.brands?.includes(brand)"
-                 (change)="handleBrandFilterChange($event, brand)">
-          <label [for]="'brand-' + brand">{{brand}}</label>
+                 [id]="'color-' + color"
+                 [checked]="activeFilters.color?.includes(color)"
+                 (change)="handleColorFilterChange($event, color)">
+          <label [for]="'color-' + color">{{color}}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Size Filter -->
+    <div class="filter-section">
+      <h4>Sizes</h4>
+      <div class="size-options">
+        <div *ngFor="let size of availableSizes" class="size-option">
+          <input type="checkbox" 
+                 [id]="'size-' + size"
+                 [checked]="activeFilters.size?.includes(size)"
+                 (change)="handleSizeFilterChange($event, size)">
+          <label [for]="'size-' + size">{{size}}</label>
         </div>
       </div>
     </div>
@@ -41,17 +55,16 @@
     <!-- Sort and Results Info -->
     <div class="products-header">
       <div class="results-info">
-        Showing {{filteredProducts.length}} results
+        Showing {{products.length}} of {{totalItems}} results
         <span *ngIf="activeFilters.category">in {{activeFilters.category}}</span>
       </div>
       
       <div class="sort-section">
         <label for="sort">Sort by:</label>
         <select id="sort" (change)="handleSortChange($event)">
-          <option value="">Relevance</option>
           <option *ngFor="let option of sortOptions" 
                   [value]="option.value"
-                  [selected]="activeFilters.sortBy === option.value">
+                  [selected]="activeFilters.sort === option.value">
             {{option.label}}
           </option>
         </select>
@@ -60,13 +73,28 @@
 
     <!-- Products Grid -->
     <div class="products-grid">
-      <app-product-card *ngFor="let product of filteredProducts"
+      <app-product-card *ngFor="let product of products"
                        [product]="product">
       </app-product-card>
     </div>
 
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalItems > 0">
+      <button 
+        [disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)">
+        Previous
+      </button>
+      <span>Page {{currentPage}} of {{Math.ceil(totalItems / pageSize)}}</span>
+      <button 
+        [disabled]="currentPage >= Math.ceil(totalItems / pageSize)"
+        (click)="changePage(currentPage + 1)">
+        Next
+      </button>
+    </div>
+
     <!-- Empty State -->
-    <div *ngIf="filteredProducts.length === 0" class="empty-state">
+    <div *ngIf="products.length === 0" class="empty-state">
       <i class="fas fa-box-open"></i>
       <h3>No Products Found</h3>
       <p>Try adjusting your filters or browse our other categories</p>
