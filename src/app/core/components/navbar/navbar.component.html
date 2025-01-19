@@ -24,7 +24,8 @@
     <div class="navbar-actions">
       <!-- Show these buttons only when user is signed in -->
       <ng-container *ngIf="isSignedIn">
-        <button class="icon-button" matRipple>
+        <button class="icon-button"
+        routerLink="/profile" matRipple>
           <i class="fas fa-user"></i>
           <span class="icon-label">Profile</span>
         </button>

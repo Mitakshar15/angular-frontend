@@ -20,10 +20,18 @@ export class NavbarComponent {
     private dialog: MatDialog,
     private authService: AuthService
   ) {
+    // Initialize based on current auth state
+    this.isSignedIn = this.authService.isAuthenticated();
+    
     // Subscribe to auth state changes
     this.authService.isSignedIn$.subscribe(
       isSignedIn => this.isSignedIn = isSignedIn
     );
+
+    // If authenticated, load the profile
+    if (this.isSignedIn) {
+      this.authService.loadUserProfile().subscribe();
+    }
   }
 
   signIn() {
@@ -33,8 +41,8 @@ export class NavbarComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // No need to manually set isSignedIn, AuthService handles it
       if (result === true) {
+        // Auth service will handle the state update
         console.log('Successfully signed in');
       }
     });

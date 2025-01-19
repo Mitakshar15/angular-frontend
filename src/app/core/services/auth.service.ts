@@ -1,6 +1,6 @@
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { ApiService } from './api.service';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, of } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
 import { SignInRequest, SignUpRequest, AuthResponse, UserProfile, UserProfileResponse } from '../interfaces/auth.interface';
 import { Router } from '@angular/router';
@@ -22,30 +22,10 @@ export class AuthService {
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
-    this.initializeAuth();
-  }
-
-  private initializeAuth(): void {
-    if (this.isBrowser) {
-      const token = this.getToken();
-      if (token) {
-        // If we have a token, set initial signed in state to true
-        this.isSignedInSubject.next(true);
-        // Then try to load the profile
-        this.loadUserProfile().subscribe({
-          next: (response) => {
-            if (response?.data) {
-              this.currentUserSubject.next(response.data);
-            }
-          },
-          error: (error) => {
-            if (error.status === 401) {
-              // Only clear auth if token is invalid
-              this.clearAuth();
-            }
-          }
-        });
-      }
+    // Check for JWT and initialize auth state
+    const token = this.getToken();
+    if (token) {
+      this.isSignedInSubject.next(true);
     }
   }
 
@@ -74,6 +54,11 @@ export class AuthService {
   }
 
   loadUserProfile(): Observable<UserProfileResponse> {
+    const token = this.getToken();
+    if (!token) {
+      return of({ data: null as unknown as UserProfile } as UserProfileResponse);
+    }
+
     return this.api.get<UserProfileResponse>(API_CONFIG.ENDPOINTS.USER.PROFILE).pipe(
       tap(response => {
         if (response?.data) {
