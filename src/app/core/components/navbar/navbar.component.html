@@ -22,18 +22,31 @@
     </div>
 
     <div class="navbar-actions">
-      <button class="icon-button" matRipple>
-        <i class="fas fa-user"></i>
-        <span class="icon-label">Account</span>
-      </button>
-      <button class="icon-button" matRipple>
-        <i class="far fa-heart"></i>
-        <span class="icon-label">Wishlist</span>
-      </button>
-      <button class="icon-button cart-button" matRipple>
-        <i class="fas fa-shopping-bag"></i>
-        <span class="icon-label">Cart</span>
-        <span class="cart-count" *ngIf="cartItemCount > 0">{{cartItemCount}}</span>
+      <!-- Show these buttons only when user is signed in -->
+      <ng-container *ngIf="isSignedIn">
+        <button class="icon-button" matRipple>
+          <i class="fas fa-user"></i>
+          <span class="icon-label">Profile</span>
+        </button>
+        <button class="icon-button" matRipple>
+          <i class="far fa-heart"></i>
+          <span class="icon-label">Wishlist</span>
+        </button>
+        <button class="icon-button cart-button" matRipple>
+          <i class="fas fa-shopping-bag"></i>
+          <span class="icon-label">Cart</span>
+          <span class="cart-count" *ngIf="cartItemCount > 0">{{cartItemCount}}</span>
+        </button>
+        <button class="icon-button" (click)="signOut()" matRipple>
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="icon-label">Sign Out</span>
+        </button>
+      </ng-container>
+
+      <!-- Show sign in button when user is not signed in -->
+      <button *ngIf="!isSignedIn" class="sign-in-button" (click)="signIn()" matRipple>
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Sign In</span>
       </button>
     </div>
   </div>

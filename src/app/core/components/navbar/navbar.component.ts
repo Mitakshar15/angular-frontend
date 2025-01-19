@@ -11,4 +11,14 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
   cartItemCount = 0;
+  isSignedIn = false; // Flag to check if user is signed in
+
+  signIn() {
+    // Implement sign in logic here
+    this.isSignedIn = true;
+  }
+
+  signOut() {
+    this.isSignedIn = false;
+  }
 }

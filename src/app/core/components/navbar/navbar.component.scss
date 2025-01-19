@@ -129,7 +129,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
       background: none;
       border: none;
       padding: 0.5rem;
-      color: $gray-900;
+      color: var(--gray-900);
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -147,7 +147,7 @@ $shadow-color: rgba(0, 0, 0, 0.1);
       }
       
       &:hover {
-        color: $primary-magenta;
+        color: var(--primary-magenta);
       }
     }
     
@@ -158,14 +158,37 @@ $shadow-color: rgba(0, 0, 0, 0.1);
         position: absolute;
         top: -5px;
         right: -5px;
-        background-color: $primary-magenta;
-        color: $white;
+        background-color: var(--primary-magenta);
+        color: var(--white);
         font-size: 0.75rem;
         font-weight: 600;
         padding: 0.25rem 0.5rem;
         border-radius: 1rem;
         min-width: 1.5rem;
         text-align: center;
+      }
+    }
+
+    .sign-in-button {
+      background-color: var(--primary-magenta);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+
+      i {
+        font-size: 1rem;
+      }
+
+      &:hover {
+        background-color: var(--dark-magenta);
+        transform: translateY(-1px);
       }
     }
   }
