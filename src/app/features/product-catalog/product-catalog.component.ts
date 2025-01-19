@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-product-catalog',
   templateUrl: './product-catalog.component.html',
   styleUrls: ['./product-catalog.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatCardModule, ProductCardComponent]
+  imports: [CommonModule, MatGridListModule, MatCardModule, ProductCardComponent,HomeComponent]
 })
 export class ProductCatalogComponent {
   products = [

@@ -4,6 +4,15 @@
       <a routerLink="/" class="logo">FASHION<span>HUB</span></a>
     </div>
     
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" placeholder="Search products..." class="search-input">
+        <button class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+
     <div class="navbar-menu">
       <a routerLink="/women" class="nav-link">Women</a>
       <a routerLink="/men" class="nav-link">Men</a>
@@ -13,14 +22,17 @@
     </div>
 
     <div class="navbar-actions">
-      <button class="icon-button">
-        <i class="fas fa-search"></i>
-      </button>
-      <button class="icon-button">
+      <button class="icon-button" matRipple>
         <i class="fas fa-user"></i>
+        <span class="icon-label">Account</span>
       </button>
-      <button class="icon-button cart-button">
+      <button class="icon-button" matRipple>
+        <i class="far fa-heart"></i>
+        <span class="icon-label">Wishlist</span>
+      </button>
+      <button class="icon-button cart-button" matRipple>
         <i class="fas fa-shopping-bag"></i>
+        <span class="icon-label">Cart</span>
         <span class="cart-count" *ngIf="cartItemCount > 0">{{cartItemCount}}</span>
       </button>
     </div>

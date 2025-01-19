@@ -229,17 +229,11 @@
     }
     
     .featured-products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--spacing-lg);
-      padding: 0 var(--spacing-md);
+      display: flex;
+      justify-content: space-around;
       max-width: 1200px;
       margin: 0 auto;
-      
-      .featured-item {
-        display: flex;
-        justify-content: center;
-      }
+
     }
   }
   

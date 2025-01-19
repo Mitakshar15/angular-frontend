@@ -1,91 +1,171 @@
+// Variables
+$primary-magenta: #E91E63;
+$dark-magenta: #C2185B;
+$light-magenta: #F8BBD0;
+$gray-900: #212121;
+$gray-100: #F5F5F5;
+$white: #ffffff;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
 .navbar {
-  background: var(--background-light);
-  padding: var(--spacing-md) 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  position: sticky;
+  background-color: $white;
+  box-shadow: 0 2px 8px $shadow-color;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
+  height: 70px;
   
   .navbar-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--spacing-lg);
+    padding: 0 2rem;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
   }
 
   .navbar-brand {
     .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: var(--primary-color);
       text-decoration: none;
+      color: $gray-900;
+      letter-spacing: 0.5px;
       
       span {
-        color: var(--accent-color);
+        color: $primary-magenta;
+      }
+    }
+  }
+
+  .search-container {
+    flex: 1;
+    max-width: 600px;
+    
+    .search-box {
+      display: flex;
+      align-items: center;
+      background-color: $gray-100;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      
+      &:focus-within {
+        box-shadow: 0 0 0 2px $light-magenta;
+      }
+      
+      .search-input {
+        flex: 1;
+        border: none;
+        padding: 0.75rem 1rem;
+        background: transparent;
+        font-size: 0.95rem;
+        
+        &:focus {
+          outline: none;
+        }
+      }
+      
+      .search-button {
+        background: none;
+        border: none;
+        padding: 0.75rem 1rem;
+        color: $primary-magenta;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        
+        &:hover {
+          color: $dark-magenta;
+        }
       }
     }
   }
 
   .navbar-menu {
     display: flex;
-    gap: var(--spacing-xl);
+    gap: 1.5rem;
+    align-items: center;
     
     .nav-link {
       text-decoration: none;
-      color: var(--text-primary);
-      font-size: 0.95rem;
+      color: $gray-900;
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
       position: relative;
+      transition: color 0.3s ease;
       
       &:after {
         content: '';
         position: absolute;
-        bottom: -5px;
+        bottom: 0;
         left: 0;
         width: 0;
         height: 2px;
-        background: var(--accent-color);
+        background-color: $primary-magenta;
         transition: width 0.3s ease;
       }
       
-      &:hover:after {
-        width: 100%;
+      &:hover {
+        color: $primary-magenta;
+        
+        &:after {
+          width: 100%;
+        }
       }
     }
   }
 
   .navbar-actions {
     display: flex;
-    gap: var(--spacing-md);
+    gap: 1rem;
+    align-items: center;
     
     .icon-button {
       background: none;
       border: none;
-      padding: var(--spacing-sm);
+      padding: 0.5rem;
+      color: $gray-900;
       cursor: pointer;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      transition: color 0.3s ease;
       
       i {
-        font-size: 1.2rem;
-        color: var(--text-primary);
+        font-size: 1.25rem;
+      }
+      
+      .icon-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+      
+      &:hover {
+        color: $primary-magenta;
       }
     }
-
+    
     .cart-button {
+      position: relative;
+      
       .cart-count {
         position: absolute;
         top: -5px;
         right: -5px;
-        background: var(--accent-color);
-        color: white;
-        font-size: 0.7rem;
-        padding: 2px 6px;
-        border-radius: 50%;
+        background-color: $primary-magenta;
+        color: $white;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 1rem;
+        min-width: 1.5rem;
+        text-align: center;
       }
     }
   }
