@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthComponent } from '../../../features/auth/auth.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,14 +14,41 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
   cartItemCount = 0;
-  isSignedIn = false; // Flag to check if user is signed in
+  isSignedIn = false;
+
+  constructor(
+    private dialog: MatDialog,
+    private authService: AuthService
+  ) {
+    // Initialize based on current auth state
+    this.isSignedIn = this.authService.isAuthenticated();
+    
+    // Subscribe to auth state changes
+    this.authService.isSignedIn$.subscribe(
+      isSignedIn => this.isSignedIn = isSignedIn
+    );
+
+    // If authenticated, load the profile
+    if (this.isSignedIn) {
+      this.authService.loadUserProfile().subscribe();
+    }
+  }
 
   signIn() {
-    // Implement sign in logic here
-    this.isSignedIn = true;
+    const dialogRef = this.dialog.open(AuthComponent, {
+      width: '400px',
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        // Auth service will handle the state update
+        console.log('Successfully signed in');
+      }
+    });
   }
 
   signOut() {
-    this.isSignedIn = false;
+    this.authService.logout();
   }
 }

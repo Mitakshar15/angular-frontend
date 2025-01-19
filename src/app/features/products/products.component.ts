@@ -3,13 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { FormsModule } from '@angular/forms';
-
-interface ProductFilter {
-  category?: string;
-  priceRange?: { min: number; max: number };
-  brands?: string[];
-  sortBy?: 'price-asc' | 'price-desc' | 'newest' | 'popular';
-}
+import { ProductService, ProductFilter } from '../../core/services/product.service';
+import { Product } from '../../shared/models/product.model';
 
 @Component({
   selector: 'app-products',
@@ -19,174 +14,158 @@ interface ProductFilter {
   imports: [CommonModule, ProductCardComponent, FormsModule]
 })
 export class ProductsComponent implements OnInit {
-  products = [
-    {
-      id: 1,
-      name: 'Classic White T-Shirt',
-      description: 'Essential cotton t-shirt',
-      price: 29.99,
-      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/l5h2xe80/kurta/x/6/n/xl-kast-tile-green-majestic-man-original-imagg4z33hu4kzpv.jpeg?q=70',
-      brand: 'Essential Wear',
-      category: 'men'
-    },
-    {
-      id: 2,
-      name: 'Floral Summer Dress',
-      description: 'Light and breezy summer dress',
-      price: 59.99,
-      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/l/f/r/xl-k-spl668-yellow-sg-leman-original-imagznqcrahgq9rf.jpeg?q=70',
-      brand: 'Fashion Elite',
-      category: 'women'
-    },
-    {
-      id: 3,
-      name: 'Leather Handbag',
-      description: 'Classic leather handbag',
-      price: 89.99,
-      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/g/6/k/m-sksh-dt1105-pcbl-fubar-original-imafux247zhqym2z-bb.jpeg?q=70',
-      brand: 'Luxury Brand',
-      category: 'accessories'
-    },
-    {
-      id: 4,
-      name: 'Men\'s Denim Jeans',
-      description: 'Classic fit denim jeans',
-      price: 79.99,
-      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/i/v/x/xxl-br-ad-kt-105-adwyn-peter-original-imagj4zyd2q7t6cg.jpeg?q=70',
-      brand: 'Essential Wear',
-      category: 'men'
-    },
-    {
-      id: 5,
-      name: 'Women\'s Blazer',
-      description: 'Professional women\'s blazer',
-      price: 129.99,
-      imageUrl: 'https://rukminim1.flixcart.com/image/612/612/xif0q/kurta/j/a/r/l-poch521835-peter-england-original-imag7jg47g7cxhg3-bb.jpeg?q=70',
-      brand: 'Fashion Elite',
-      category: 'women'
-    }
-  ];
-
-  filteredProducts = [...this.products];
-  activeFilters: ProductFilter = {};
+  products: Product[] = [];
+  totalItems: number = 0;
+  currentPage: number = 1;
+  pageSize: number = 10;
+  Math = Math;
   
-  availableBrands = ['Essential Wear', 'Luxury Brand', 'Sports Pro', 'Fashion Elite'];
+  activeFilters: ProductFilter = {
+    category: '',
+    color: [''],
+    size: [''],
+    minPrice: 0,
+    maxPrice: 100000,
+    minDiscount: 0,
+    sort: 'price_low',
+    stock: 'in_stock',
+    pageNumber: 1,
+    pageSize: 10
+  };
+  
+  availableColors = ['RED', 'BLUE', 'GREEN', 'BLACK', 'WHITE'];
+  availableSizes = ['S', 'M', 'L', 'XL', 'XXL'];
   priceRanges = [
-    { label: 'Under $50', min: 0, max: 50 },
-    { label: '$50 - $100', min: 50, max: 100 },
-    { label: '$100 - $200', min: 100, max: 200 },
-    { label: 'Over $200', min: 200, max: Infinity }
+    { label: 'Under ₹500', min: 0, max: 500 },
+    { label: '₹500 - ₹1000', min: 500, max: 1000 },
+    { label: '₹1000 - ₹2000', min: 1000, max: 2000 },
+    { label: 'Over ₹2000', min: 2000, max: 100000 }
   ];
   sortOptions = [
-    { value: 'price-asc', label: 'Price: Low to High' },
-    { value: 'price-desc', label: 'Price: High to Low' },
-    { value: 'newest', label: 'Newest First' },
-    { value: 'popular', label: 'Most Popular' }
+    { value: 'price_low', label: 'Price: Low to High' },
+    { value: 'price_high', label: 'Price: High to Low' },
+    { value: 'newest', label: 'Newest First' }
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService
+  ) {}
 
   ngOnInit() {
-    // Handle both route params and data
+    // Handle category from route params
     this.route.paramMap.subscribe(params => {
       const category = params.get('category');
       if (category) {
         this.activeFilters.category = category;
-        this.applyFilters();
       }
+      this.loadProducts();
     });
-
-    // Handle route data for direct category routes
-    this.route.data.subscribe(data => {
-      if (data['category'] && !this.activeFilters.category) {
-        this.activeFilters.category = data['category'];
-        this.applyFilters();
-      }
-    });
-
-    // Initial filter application
-    this.applyFilters();
   }
 
-  applyFilters() {
-    let filtered = [...this.products];
-
-    // Apply category filter
-    if (this.activeFilters.category) {
-      filtered = filtered.filter(product => 
-        product.category === this.activeFilters.category
-      );
-    }
-
-    // Apply price range filter
-    if (this.activeFilters.priceRange) {
-      filtered = filtered.filter(product => 
-        product.price >= this.activeFilters.priceRange!.min && 
-        product.price <= this.activeFilters.priceRange!.max
-      );
-    }
-
-    // Apply brand filter
-    if (this.activeFilters.brands && this.activeFilters.brands.length > 0) {
-      filtered = filtered.filter(product => 
-        this.activeFilters.brands!.includes(product.brand)
-      );
-    }
-
-    // Apply sorting
-    if (this.activeFilters.sortBy) {
-      filtered.sort((a, b) => {
-        switch (this.activeFilters.sortBy) {
-          case 'price-asc':
-            return a.price - b.price;
-          case 'price-desc':
-            return b.price - a.price;
-          // Add other sorting logic as needed
-          default:
-            return 0;
+  loadProducts() {
+    this.productService.getFilteredProducts(this.activeFilters)
+      .subscribe({
+        next: (response) => {
+          this.products = response.products.map(p => ({
+            id: p.id,
+            name: p.title,
+            description: p.description,
+            price: p.discountedPrice || p.price,
+            imageUrl: p.imageUrl,
+            brand: p.brand,
+            originalPrice: p.price
+          }));
+          this.totalItems = response.totalItems;
+          this.currentPage = response.currentPage;
+        },
+        error: (error) => {
+          console.error('Error loading products:', error);
+          // Handle error appropriately
         }
       });
-    }
-
-    this.filteredProducts = filtered;
   }
 
   updatePriceRange(range: { min: number; max: number }) {
-    this.activeFilters.priceRange = range;
-    this.applyFilters();
+    this.activeFilters.minPrice = range.min;
+    this.activeFilters.maxPrice = range.max;
+    this.resetPagination();
+    this.loadProducts();
   }
 
-  updateBrandFilter(brand: string, checked: boolean) {
-    if (!this.activeFilters.brands) {
-      this.activeFilters.brands = [];
+  updateColorFilter(color: string, checked: boolean) {
+    if (!this.activeFilters.color) {
+      this.activeFilters.color = [];
     }
     
     if (checked) {
-      this.activeFilters.brands.push(brand);
+      this.activeFilters.color.push(color);
     } else {
-      this.activeFilters.brands = this.activeFilters.brands.filter(b => b !== brand);
+      this.activeFilters.color = this.activeFilters.color.filter(c => c !== color);
     }
     
-    this.applyFilters();
+    this.resetPagination();
+    this.loadProducts();
   }
 
-  updateSort(sortValue: 'price-asc' | 'price-desc' | 'newest' | 'popular') {
-    this.activeFilters.sortBy = sortValue;
-    this.applyFilters();
+  updateSizeFilter(size: string, checked: boolean) {
+    if (!this.activeFilters.size) {
+      this.activeFilters.size = [];
+    }
+    
+    if (checked) {
+      this.activeFilters.size.push(size);
+    } else {
+      this.activeFilters.size = this.activeFilters.size.filter(s => s !== size);
+    }
+    
+    this.resetPagination();
+    this.loadProducts();
+  }
+
+  updateSort(sortValue: string) {
+    this.activeFilters.sort = sortValue;
+    this.resetPagination();
+    this.loadProducts();
+  }
+
+  changePage(page: number) {
+    this.activeFilters.pageNumber = page;
+    this.loadProducts();
+  }
+
+  resetPagination() {
+    this.activeFilters.pageNumber = 1;
   }
 
   clearFilters() {
-    this.activeFilters = {};
-    this.filteredProducts = [...this.products];
+    this.activeFilters = {
+      category: '',
+      color: [''],
+      size: [''],
+      minPrice: 0,
+      maxPrice: 100000,
+      minDiscount: 0,
+      sort: 'price_low',
+      stock: 'in_stock',
+      pageNumber: 1,
+      pageSize: 10
+    };
+    this.loadProducts();
   }
 
-  handleBrandFilterChange(event: Event, brand: string) {
+  handleColorFilterChange(event: Event, color: string) {
     const checkbox = event.target as HTMLInputElement;
-    this.updateBrandFilter(brand, checkbox.checked);
+    this.updateColorFilter(color, checkbox.checked);
+  }
+
+  handleSizeFilterChange(event: Event, size: string) {
+    const checkbox = event.target as HTMLInputElement;
+    this.updateSizeFilter(size, checkbox.checked);
   }
 
   handleSortChange(event: Event) {
     const select = event.target as HTMLSelectElement;
-    this.updateSort(select.value as 'price-asc' | 'price-desc' | 'newest' | 'popular');
+    this.updateSort(select.value);
   }
 } 
