@@ -257,6 +257,49 @@
       }
     }
   }
+
+  .featured-catalogs-section {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--gray-50);
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+
+      h2 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin-bottom: var(--spacing-sm);
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background-color: var(--primary-magenta);
+        }
+      }
+
+      p {
+        color: var(--gray-600);
+        font-size: 1.1rem;
+      }
+    }
+
+    .featured-catalogs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+  }
 }
 
 /* Responsive Styles */

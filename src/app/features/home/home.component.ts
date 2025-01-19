@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { ProductCatalogComponent } from '../product-catalog/product-catalog.component';
+import { FeaturedCatalogComponent } from '../../shared/components/featured-catalog/featured-catalog.component';
+import { Catalog } from '../../shared/models/catalog.model';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [CommonModule, CarouselModule, ProductCardComponent, ProductCatalogComponent]
+  imports: [CommonModule, CarouselModule, ProductCardComponent, ProductCatalogComponent, FeaturedCatalogComponent]
 })
 export class HomeComponent {
   carouselOptions = {
@@ -36,6 +38,33 @@ export class HomeComponent {
       image: 'assets/images/banner3.jpg',
       title: 'Summer Sale',
       subtitle: 'Get ready for summer with our exclusive collection'
+    }
+  ];
+
+  featuredCatalogs: Catalog[] = [
+    {
+      id: 'women',
+      name: 'Women\'s Fashion',
+      description: 'Discover the latest trends in women\'s fashion',
+      imageUrl: 'https://img.freepik.com/free-photo/stylish-woman-summer-outfit-isolated-posing-fashion-trend-isolated_285396-472.jpg',
+      route: '/women',
+      productCount: 1200
+    },
+    {
+      id: 'men',
+      name: 'Men\'s Collection',
+      description: 'Explore our premium men\'s collection',
+      imageUrl: 'https://img.freepik.com/free-photo/full-length-portrait-handsome-serious-man_171337-17388.jpg',
+      route: '/men',
+      productCount: 850
+    },
+    {
+      id: 'accessories',
+      name: 'Accessories',
+      description: 'Complete your look with our accessories',
+      imageUrl: 'https://img.freepik.com/free-photo/accessories-men-watch-wallet-pen-cufflinks_107420-95773.jpg',
+      route: '/accessories',
+      productCount: 500
     }
   ];
 

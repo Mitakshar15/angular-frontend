@@ -1,0 +1,11 @@
+<div class="featured-catalog" [routerLink]="[catalog.route]">
+  <div class="catalog-image">
+    <img [src]="catalog.imageUrl" [alt]="catalog.name">
+    <div class="catalog-overlay">
+      <h3>{{catalog.name}}</h3>
+      <p>{{catalog.description}}</p>
+      <span class="product-count" *ngIf="catalog.productCount">{{catalog.productCount}} Products</span>
+      <button class="explore-btn">Explore Now</button>
+    </div>
+  </div>
+</div> 

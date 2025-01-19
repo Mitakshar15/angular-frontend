@@ -15,6 +15,17 @@
     </owl-carousel-o>
   </section>
 
+  <!-- Featured Catalogs Section -->
+  <section class="featured-catalogs-section">
+    <div class="section-header">
+      <h2>Shop by Category</h2>
+      <p>Explore our curated collections</p>
+    </div>
+    <div class="featured-catalogs-grid">
+      <app-featured-catalog *ngFor="let catalog of featuredCatalogs" [catalog]="catalog"></app-featured-catalog>
+    </div>
+  </section>
+
   <!-- Featured Products Section -->
   <section class="featured-section">
     <h2>Featured Products</h2>
