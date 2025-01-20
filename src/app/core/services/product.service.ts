@@ -48,6 +48,7 @@ export interface ProductFilter {
   pageSize?: number;
 }
 
+
 @Injectable({
   providedIn: 'root'
 })

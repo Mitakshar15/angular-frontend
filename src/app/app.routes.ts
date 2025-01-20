@@ -9,6 +9,8 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'products/:category/:seconLevelCategory/:thirdLevelCategory', component: ProductsComponent },
+  // Add product detail route before the wildcard route
+  { path: 'product/:id', component: ProductDetailComponent }, // Changed from 'product/:id' to 'products/:id'
   { 
     path: 'profile', 
     loadChildren: () => import('./features/profile/profile.routes').then(m => m.PROFILE_ROUTES),
@@ -20,9 +22,6 @@ export const routes: Routes = [
   { path: 'clothing', component: ProductsComponent, data: { category: 'clothing' } },
   { path: 'kurta', component: ProductsComponent, data: { category: 'Kurta' } },
   { path: 'auth', component: AuthComponent },
-  { path: '**', redirectTo: '' },
-  {
-    path: 'product/:id',
-    component: ProductDetailComponent
-  }
+  // Wildcard route should always be last
+  { path: '**', redirectTo: '' }
 ];

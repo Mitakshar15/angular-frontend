@@ -2,9 +2,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Observable, EMPTY } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
 import { Product, ProductService } from '../../core/services/product.service';
+
+
+interface ApiResponse {
+  respType: string;
+  metadata: {
+    timestamp: string;
+    traceId: string;
+  };
+  status: {
+    statusCode: number;
+    statusMessage: string;
+    statusMessageKey: string;
+  };
+  product: Product;
+}
 
 @Component({
   selector: 'app-product-detail',
@@ -14,7 +27,7 @@ import { Product, ProductService } from '../../core/services/product.service';
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-  product$: Observable<Product> = EMPTY;
+  product: Product | null = null;
   selectedSize?: string;
   quantity: number = 1;
   loading: boolean = true;
@@ -26,26 +39,44 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService
   ) {}
 
-  ngOnInit(): void {
-    const productId = Number(this.route.snapshot.params['id']);
-    this.loadProduct(productId);
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      const productId = Number(params['id']);
+      if (productId) {
+        this.loadProduct(productId);
+      } else {
+        this.error = 'Invalid product ID';
+        this.loading = false;
+      }
+    });
   }
 
-  private loadProduct(id: number): void {
+  private loadProduct(id: number) {
     this.loading = true;
     this.error = '';
     
-    this.product$ = this.productService.getProductById(id).pipe(
-      finalize(() => {
-        this.loading = false;
-      }),
-      catchError(err => {
+    this.productService.getProductById(id).subscribe({
+      next: (response: any) => {  // Use 'any' temporarily to handle the response
+        if (response && response.product) {
+          this.product = response.product;  // Access the nested product property
+          this.loading = false;
+          console.log('Product loaded:', this.product);
+        } else {
+          this.error = 'Product not found';
+          this.loading = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error loading product:', error);
         this.error = 'Failed to load product details';
-        return EMPTY;
-      })
-    );
-  }
+        this.loading = false;
+      }
+    });
+}
 
+  // Remove the setProduct method as it's unnecessary
+
+  // Rest of your methods remain the same
   onSizeSelect(size: string): void {
     this.selectedSize = size;
   }
