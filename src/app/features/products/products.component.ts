@@ -30,7 +30,7 @@ export class ProductsComponent implements OnInit {
     sort: 'price_low',
     stock: 'in_stock',
     pageNumber: 1,
-    pageSize: 10
+    pageSize: 9
   };
   
   availableColors = ['RED', 'BLUE', 'GREEN', 'BLACK', 'WHITE'];
@@ -69,7 +69,7 @@ export class ProductsComponent implements OnInit {
         next: (response) => {
           this.products = response.products.map(p => ({
             id: p.id,
-            name: p.title,
+            title: p.title,
             description: p.description,
             price: p.discountedPrice || p.price,
             imageUrl: p.imageUrl,

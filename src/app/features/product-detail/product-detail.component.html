@@ -1,0 +1,103 @@
+<div class="product-container">
+  <!-- Navigation -->
+  <nav class="navigation">
+    <button class="back-btn" (click)="goBack()">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+      Back
+    </button>
+  </nav>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-state">
+    <div class="error-content">
+      <svg class="error-icon" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      </svg>
+      <h2>{{error}}</h2>
+      <button class="primary-btn" (click)="goBack()">Go Back</button>
+    </div>
+  </div>
+
+  <!-- Product Content -->
+  <main *ngIf="product && !loading && !error" class="product-content">
+    <!-- Image Section -->
+    <section class="image-section">
+      <div class="image-wrapper">
+        <img [src]="product.imageUrl" [alt]="product.title" class="product-image">
+      </div>
+    </section>
+
+    <!-- Details Section -->
+    <section class="details-section">
+      <div class="product-info">
+        <!-- Header -->
+        <div class="product-header">
+          <h1 class="title">{{product.title}}</h1>
+          <p class="brand">{{product.brand}}</p>
+        </div>
+
+        <!-- Price -->
+        <div class="price-block">
+          <div class="price-wrapper">
+            <span class="current-price">₹{{product.discountedPrice || product.price}}</span>
+            <span class="original-price" *ngIf="product.discountedPrice">
+              ₹{{product.price}}
+            </span>
+            <span class="discount" *ngIf="product.discountPercent">
+              {{product.discountPercent}}% off
+            </span>
+          </div>
+          <span class="tax-info">Inclusive of all taxes</span>
+        </div>
+
+        <!-- Size Selection -->
+        <div class="size-block" *ngIf="product.sizes?.length">
+          <div class="size-header">
+            <span class="label">Select Size</span>
+            <button class="size-guide">Size Guide</button>
+          </div>
+          <div class="size-grid">
+            <button *ngFor="let size of product.sizes"
+                    class="size-btn"
+                    [class.selected]="selectedSize === size.name"
+                    [class.disabled]="size.quantity === 0"
+                    [disabled]="size.quantity === 0"
+                    (click)="onSizeSelect(size.name)">
+              {{size.name}}
+            </button>
+          </div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="quantity-block">
+          <span class="label">Quantity</span>
+          <div class="quantity-selector">
+            <button class="qty-btn" (click)="updateQuantity(-1)" [disabled]="quantity === 1">−</button>
+            <span class="qty-value">{{quantity}}</span>
+            <button class="qty-btn" (click)="updateQuantity(1)" [disabled]="quantity === 10">+</button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="action-block">
+          <button class="primary-btn" (click)="addToCart()">
+            Add to Cart
+          </button>
+        </div>
+
+        <!-- Description -->
+        <div class="description-block">
+          <h2 class="section-title">Product Details</h2>
+          <p class="description">{{product.description}}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

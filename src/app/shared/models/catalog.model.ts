@@ -1,6 +1,6 @@
 export interface Catalog {
   id: string;
-  name: string;
+  title: string;
   description: string;
   imageUrl: string;
   route: string;
