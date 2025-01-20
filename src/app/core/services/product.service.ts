@@ -19,14 +19,14 @@ export interface Product {
   title: string;
   description: string;
   price: number;
-  discountedPrice: number;
-  discountPercent: number;
-  quantity: number;
+  discountedPrice?: number;
+  discountPercent?: number;
+  quantity?: number;
   brand: string;
-  color: string;
-  sizes: Size[];
+  color?: string;
+  sizes?: Size[];
   imageUrl: string;
-  category: ProductCategory;
+  category?: ProductCategory;
 }
 
 export interface ProductResponse {
@@ -65,7 +65,7 @@ export class ProductService {
       sort: filters.sort || 'price_low',
       stock: filters.stock || 'in_stock',
       pageNumber: filters.pageNumber || 1,
-      pageSize: filters.pageSize || 10
+      pageSize: filters.pageSize || 9
     };
 
     return this.api.get<ProductResponse>(API_CONFIG.ENDPOINTS.PRODUCTS.LIST, { params });

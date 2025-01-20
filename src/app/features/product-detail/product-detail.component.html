@@ -1,0 +1,85 @@
+<!-- product-detail.component.html -->
+<div class="product-detail-container">
+    <button class="back-button" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i> Back to Products
+    </button>
+  
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading product details...</p>
+    </div>
+  
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error">
+      <i class="fas fa-exclamation-circle"></i>
+      <h3>{{error}}</h3>
+      <button (click)="goBack()">Return to Products</button>
+    </div>
+  
+    <!-- Product Content -->
+    <ng-container *ngIf="!loading && !error">
+      <div class="product-content" *ngIf="product$ | async as product">
+        <!-- Product Images Section -->
+        <div class="product-images">
+          <div class="main-image">
+            <img [src]="product.imageUrl" [alt]="product.title">
+          </div>
+        </div>
+  
+        <!-- Product Info Section -->
+        <div class="product-info">
+          <div class="product-header">
+            <h1 class="product-title">{{product.title}}</h1>
+            <p class="product-brand">By {{product.brand}}</p>
+          </div>
+  
+          <div class="product-pricing">
+            <div class="price-container">
+              <span class="current-price">₹{{product.discountedPrice}}</span>
+              <span class="original-price">₹{{product.price}}</span>
+              <span class="discount-tag">{{product.discountPercent}}% OFF</span>
+            </div>
+            <p class="tax-info">Inclusive of all taxes</p>
+          </div>
+  
+          <!-- Size Selection -->
+          <div class="size-section">
+            <h3>Select Size</h3>
+            <div class="size-options">
+              <button *ngFor="let size of product.sizes"
+                      [class.selected]="selectedSize === size.name"
+                      [class.out-of-stock]="size.quantity === 0"
+                      [disabled]="size.quantity === 0"
+                      (click)="onSizeSelect(size.name)"
+                      class="size-button">
+                {{size.name}}
+              </button>
+            </div>
+          </div>
+  
+          <!-- Quantity Selection -->
+          <div class="quantity-section">
+            <h3>Quantity</h3>
+            <div class="quantity-selector">
+              <button (click)="updateQuantity(-1)" [disabled]="quantity === 1">-</button>
+              <span>{{quantity}}</span>
+              <button (click)="updateQuantity(1)" [disabled]="quantity === 10">+</button>
+            </div>
+          </div>
+  
+          <!-- Add to Cart Button -->
+          <button class="add-to-cart-btn" (click)="addToCart()">
+            <i class="fas fa-shopping-cart"></i>
+            Add to Cart
+          </button>
+  
+          <!-- Product Details -->
+          <div class="product-details">
+            <h3>Product Details</h3>
+            <p>{{product.description}}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
