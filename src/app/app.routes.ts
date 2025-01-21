@@ -4,6 +4,7 @@ import { ProductsComponent } from './features/products/products.component';
 import { AuthComponent } from './features/auth/auth.component';
 import { authGuard } from './core/guards/auth.guard';
 import { ProductDetailComponent } from './features/product-detail/product.detail.component';
+import { CartComponent } from './features/cart/cart.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,8 @@ export const routes: Routes = [
   { path: 'clothing', component: ProductsComponent, data: { category: 'clothing' } },
   { path: 'kurta', component: ProductsComponent, data: { category: 'Kurta' } },
   { path: 'auth', component: AuthComponent },
+  {path:'cart',component: CartComponent},
   // Wildcard route should always be last
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
+
 ];
