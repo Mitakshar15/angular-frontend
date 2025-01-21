@@ -16,6 +16,7 @@ export class CartComponent implements OnInit {
   loading = true;
   error: string | null = null;
   cartItemsOrder: number[] = []; // To maintain item order
+  isCartEmpty:boolean = false;
 
   constructor(private cartService: CartService) {}
 
@@ -37,6 +38,7 @@ export class CartComponent implements OnInit {
           
           // Sort cart items based on stored order
           const sortedItems = [...response.data.cartItems].sort((a, b) => {
+            this.isCartEmpty = false;
             return this.cartItemsOrder.indexOf(a.id) - this.cartItemsOrder.indexOf(b.id);
           });
           
@@ -52,6 +54,7 @@ export class CartComponent implements OnInit {
         this.loading = false;
       }
     });
+
   }
 
   updateQuantity(item: CartItemDto, change: number): void {

@@ -79,6 +79,7 @@
             </div>
             <div class="size-grid">
               <button
+              [disabled]="addingToCart || existInCart"
                 *ngFor="let size of product.sizes"
                 class="size-btn"
                 [class.selected]="selectedSize === size.name"
@@ -96,6 +97,7 @@
             <div class="quantity-selector">
               <button
                 class="qty-btn"
+                [disabled]="addingToCart || existInCart"
                 (click)="updateQuantity(-1)"
                 [disabled]="quantity === 1"
               >
@@ -104,6 +106,7 @@
               <span class="qty-value">{{ quantity }}</span>
               <button
                 class="qty-btn"
+                [disabled]="addingToCart || existInCart"
                 (click)="updateQuantity(1)"
                 [disabled]="quantity === 10"
               >
@@ -188,7 +191,7 @@
                 placeholder="Share your experience about this product"
                 name="reviewContent"
               ></textarea>
-              <span class="char-count">{{ reviewContent?.length || 0 }}/500</span>
+              <span class="char-count">{{ reviewContent.length || 0 }}/500</span>
             </div>
       
             <!-- Photo Upload -->
