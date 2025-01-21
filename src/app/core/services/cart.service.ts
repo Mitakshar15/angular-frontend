@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CartResponse } from '../interfaces/cart.types';
+import { AddItemToCartRequest, ApiResponse, CartApiResponse, CartResponse } from '../interfaces/cart.types';
 import { API_CONFIG } from '../config/api.config';
  // Adjust the import path
 
@@ -16,9 +16,9 @@ export class CartService {
     return this.http.get<CartResponse>(url);
   }
 
-  addToCart(productId: number, size: string): Observable<CartResponse> {
+  addToCart(request: AddItemToCartRequest): Observable<CartApiResponse> {
     const url = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CART.ADD_ITEM}`;
-    return this.http.post<CartResponse>(url, { productId, size });
+    return this.http.put<CartApiResponse>(url, request);
   }
 
   updateCartItemQuantity(cartItemId: number, quantity: number): Observable<CartResponse> {

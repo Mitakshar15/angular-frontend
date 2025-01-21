@@ -452,3 +452,91 @@ $error-color: #f44336;
     }
   }
 }
+.primary-btn {
+  // ... existing styles ...
+
+  &.loading {
+    opacity: 0.8;
+    cursor: not-allowed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: darken($primary-color, 20%);
+  }
+
+  .loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.primary-btn {
+  // ... existing styles ...
+
+  &.added {
+    background-color: $success-color; // Define this in your variables
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    .check-icon {
+      font-size: 1.2em;
+    }
+
+    &:hover {
+      background-color: $success-color;
+    }
+  }
+
+  &.loading {
+    opacity: 0.8;
+    cursor: not-allowed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    
+    &:not(.added) {
+      background: darken($primary-color, 20%);
+    }
+  }
+
+  .loader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+  }
+}
+
+// Add to your variables
+$success-color: #4caf50; // or any color you prefer

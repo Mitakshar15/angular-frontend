@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Product, ProductService } from '../../core/services/product.service';
+import { CartService } from '../../core/services/cart.service';
+import { CartApiResponse } from '../../core/interfaces/cart.types';
 
 
 interface ApiResponse {
@@ -35,10 +37,14 @@ export class ProductDetailComponent implements OnInit {
   userRating: number = 0;
   reviewTitle: string = '';
   reviewContent: string = '';
+  addingToCart: boolean = false;
+  existInCart: boolean = false;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService  // Adjust the import path
   ) {}
 
   ngOnInit() {
@@ -91,14 +97,74 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
+  // addToCart(): void {
+  //   if (!this.selectedSize) {
+  //     alert('Please select a size');
+  //     return;
+  //   }
+  //   // Implement add to cart functionality
+  // }
   addToCart(): void {
     if (!this.selectedSize) {
       alert('Please select a size');
       return;
     }
-    // Implement add to cart functionality
-  }
 
+    if (!this.product) {
+      alert('Product information not available');
+      return;
+    }
+
+    // If item already exists in cart, don't proceed
+    if (this.existInCart) {
+      return;
+    }
+
+    if (this.addingToCart) {
+      return;
+    }
+
+    this.addingToCart = true;
+
+    const request = {
+      productId: this.product.id,
+      size: this.selectedSize,
+      quantity: this.quantity,
+      Price: this.product.discountedPrice || this.product.price
+    };
+
+    this.cartService.addToCart(request).subscribe({
+      next: (response: CartApiResponse) => {
+        console.log('Add to cart response:', response);
+        
+        if (response.status.statusMessageKey === 'ERROR') {
+          if (response.status.statusCode === 404 && 
+              response.status.statusMessage === 'ITEM ALREDY EXISTS IN CART') {
+            this.existInCart = true;
+            alert('This item already exists in your cart');
+          } else {
+            alert(response.status.statusMessage || 'Failed to add item to cart');
+          }
+        } else if (response.status.statusMessageKey === 'SUCCESS') {
+          this.existInCart = true;
+          alert('Product added to cart successfully!');
+        }
+      },
+      error: (error) => {
+        console.error('Error adding to cart:', error);
+        if (error.error && error.error.status) {
+          alert(error.error.status.statusMessage || 'Failed to add product to cart');
+          this.existInCart = true;
+        } else {
+          alert('Failed to add product to cart');
+        }
+      },
+      complete: () => {
+        this.addingToCart = false;
+      }
+    });
+  }
+  
   goBack(): void {
     this.router.navigate(['/products']);
   }

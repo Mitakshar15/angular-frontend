@@ -113,9 +113,25 @@
           </div>
 
           <div class="action-block">
-            <button class="primary-btn" (click)="addToCart()">
-              Add to Cart
-            </button>
+<!-- In your product-detail.component.html -->
+<button 
+  class="primary-btn" 
+  (click)="addToCart()" 
+  [disabled]="addingToCart || existInCart"
+  [class.loading]="addingToCart && !existInCart"
+  [class.added]="existInCart">
+  <ng-container *ngIf="!existInCart && !addingToCart">
+    Add to Cart
+  </ng-container>
+  <ng-container *ngIf="addingToCart && !existInCart">
+    <span class="loader"></span>
+    Adding...
+  </ng-container>
+  <ng-container *ngIf="existInCart">
+    <span class="check-icon">✓</span>
+    Added to Cart
+  </ng-container>
+</button>
           </div>
 
           <div class="description-block">
