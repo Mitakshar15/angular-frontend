@@ -9,12 +9,11 @@
     </button>
   </nav>
 
-  <!-- Loading State -->
+  <!-- Loading & Error States -->
   <div *ngIf="loading" class="loading-state">
     <div class="loader"></div>
   </div>
 
-  <!-- Error State -->
   <div *ngIf="error" class="error-state">
     <div class="error-content">
       <svg class="error-icon" viewBox="0 0 24 24">
@@ -25,77 +24,117 @@
     </div>
   </div>
 
-  <!-- Product Content -->
+  <!-- Main Content -->
   <main *ngIf="product && !loading && !error" class="product-content">
-    <!-- Image Section -->
-    <section class="image-section">
-      <div class="image-wrapper">
-        <img [src]="product.imageUrl" [alt]="product.title" class="product-image">
+    <div class="product-grid">
+      <!-- Image Section -->
+      <section class="image-section">
+        <div class="image-wrapper">
+          <img [src]="product.imageUrl" [alt]="product.title" class="product-image">
+        </div>
+      </section>
+
+      <!-- Details Section -->
+      <section class="details-section">
+        <div class="product-info">
+          <div class="product-header">
+            <h1 class="title">{{product.title}}</h1>
+            <p class="brand">{{product.brand}}</p>
+            <div class="rating-summary">
+              <div class="stars">
+                <span class="star-rating">4.5</span>
+                <div class="star-icons">
+                  ★★★★½
+                </div>
+              </div>
+              <span class="review-count">(245 Reviews)</span>
+            </div>
+          </div>
+
+          <div class="price-block">
+            <div class="price-wrapper">
+              <span class="current-price">₹{{product.discountedPrice || product.price}}</span>
+              <span class="original-price" *ngIf="product.discountedPrice">₹{{product.price}}</span>
+              <span class="discount" *ngIf="product.discountPercent">{{product.discountPercent}}% off</span>
+            </div>
+            <span class="tax-info">Inclusive of all taxes</span>
+          </div>
+
+          <div class="size-block" *ngIf="product.sizes?.length">
+            <div class="size-header">
+              <span class="label">Select Size</span>
+              <button class="size-guide">Size Guide</button>
+            </div>
+            <div class="size-grid">
+              <button *ngFor="let size of product.sizes"
+                      class="size-btn"
+                      [class.selected]="selectedSize === size.name"
+                      [class.disabled]="size.quantity === 0"
+                      [disabled]="size.quantity === 0"
+                      (click)="onSizeSelect(size.name)">
+                {{size.name}}
+              </button>
+            </div>
+          </div>
+
+          <div class="quantity-block">
+            <span class="label">Quantity</span>
+            <div class="quantity-selector">
+              <button class="qty-btn" (click)="updateQuantity(-1)" [disabled]="quantity === 1">−</button>
+              <span class="qty-value">{{quantity}}</span>
+              <button class="qty-btn" (click)="updateQuantity(1)" [disabled]="quantity === 10">+</button>
+            </div>
+          </div>
+
+          <div class="action-block">
+            <button class="primary-btn" (click)="addToCart()">Add to Cart</button>
+          </div>
+
+          <div class="description-block">
+            <h2 class="section-title">Product Details</h2>
+            <p class="description">{{product.description}}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+      <h2 class="section-title">Customer Reviews</h2>
+      <div class="reviews-summary">
+        <div class="rating-distribution">
+          <div class="rating-bar" *ngFor="let rating of [5,4,3,2,1]">
+            <span class="star-label">{{rating}} ★</span>
+            <div class="progress-bar">
+              <div class="progress" [style.width]="rating === 5 ? '70%' : rating === 4 ? '20%' : '10%'"></div>
+            </div>
+            <span class="count">{{rating === 5 ? '170' : rating === 4 ? '50' : '25'}}</span>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <!-- Details Section -->
-    <section class="details-section">
-      <div class="product-info">
-        <!-- Header -->
-        <div class="product-header">
-          <h1 class="title">{{product.title}}</h1>
-          <p class="brand">{{product.brand}}</p>
-        </div>
-
-        <!-- Price -->
-        <div class="price-block">
-          <div class="price-wrapper">
-            <span class="current-price">₹{{product.discountedPrice || product.price}}</span>
-            <span class="original-price" *ngIf="product.discountedPrice">
-              ₹{{product.price}}
-            </span>
-            <span class="discount" *ngIf="product.discountPercent">
-              {{product.discountPercent}}% off
-            </span>
+      <!-- Sample Reviews -->
+      <div class="reviews-list">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">John Doe</span>
+              <div class="review-stars">★★★★★</div>
+            </div>
+            <span class="review-date">2 days ago</span>
           </div>
-          <span class="tax-info">Inclusive of all taxes</span>
+          <p class="review-content">Excellent product quality and perfect fit. Highly recommended!</p>
         </div>
 
-        <!-- Size Selection -->
-        <div class="size-block" *ngIf="product.sizes?.length">
-          <div class="size-header">
-            <span class="label">Select Size</span>
-            <button class="size-guide">Size Guide</button>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">Jane Smith</span>
+              <div class="review-stars">★★★★</div>
+            </div>
+            <span class="review-date">1 week ago</span>
           </div>
-          <div class="size-grid">
-            <button *ngFor="let size of product.sizes"
-                    class="size-btn"
-                    [class.selected]="selectedSize === size.name"
-                    [class.disabled]="size.quantity === 0"
-                    [disabled]="size.quantity === 0"
-                    (click)="onSizeSelect(size.name)">
-              {{size.name}}
-            </button>
-          </div>
-        </div>
-
-        <!-- Quantity -->
-        <div class="quantity-block">
-          <span class="label">Quantity</span>
-          <div class="quantity-selector">
-            <button class="qty-btn" (click)="updateQuantity(-1)" [disabled]="quantity === 1">−</button>
-            <span class="qty-value">{{quantity}}</span>
-            <button class="qty-btn" (click)="updateQuantity(1)" [disabled]="quantity === 10">+</button>
-          </div>
-        </div>
-
-        <!-- Actions -->
-        <div class="action-block">
-          <button class="primary-btn" (click)="addToCart()">
-            Add to Cart
-          </button>
-        </div>
-
-        <!-- Description -->
-        <div class="description-block">
-          <h2 class="section-title">Product Details</h2>
-          <p class="description">{{product.description}}</p>
+          <p class="review-content">Good product but delivery took longer than expected.</p>
         </div>
       </div>
     </section>
