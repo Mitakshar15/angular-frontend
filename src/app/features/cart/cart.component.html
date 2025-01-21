@@ -1,0 +1,113 @@
+<div class="cart-page">
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="loader"></div>
+    <p>Loading your cart...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error">
+    <div class="error-content">
+      <svg class="error-icon" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      </svg>
+      <h2>{{ error }}</h2>
+      <button class="retry-btn" (click)="loadCart()">Try Again</button>
+    </div>
+  </div>
+
+  <!-- Cart Content -->
+  <div class="cart-content" *ngIf="cart && !loading && !error">
+    <div class="cart-header">
+      <h1>Shopping Cart ({{ cart.totalItem }} items)</h1>
+    </div>
+
+    <div class="cart-grid">
+      <!-- Cart Items -->
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cart.cartItems">
+          <div class="item-image">
+            <img [src]="item.product.imageUrl" [alt]="item.product.title">
+          </div>
+
+          <div class="item-details">
+            <div class="item-header">
+              <h3>{{ item.product.title }}</h3>
+              <div class="brand-color">
+                <span class="brand">{{ item.product.brand }}</span>
+                <span class="color">{{ item.product.color }}</span>
+              </div>
+              <span class="size">Size: {{ item.size }}</span>
+            </div>
+
+            <div class="item-pricing">
+              <div class="price-block">
+                <span class="current-price">₹{{ item.discountedPrice }}</span>
+                <span class="original-price">₹{{ item.price }}</span>
+                <span class="discount">
+                  {{ getDiscountPercentage(item.price, item.discountedPrice) }}% OFF
+                </span>
+              </div>
+
+              <div class="quantity-controls">
+                <button 
+                  (click)="updateQuantity(item, -1)"
+                  [disabled]="item.quantity === 1">
+                  −
+                </button>
+                <span>{{ item.quantity }}</span>
+                <button 
+                  (click)="updateQuantity(item, 1)"
+                  [disabled]="item.quantity === 10">
+                  +
+                </button>
+              </div>
+            </div>
+
+            <button class="remove-btn" (click)="removeItem(item.id)">
+              <svg width="16" height="16" viewBox="0 0 24 24">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              </svg>
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="cart-summary">
+        <h2>Order Summary</h2>
+        
+        <div class="summary-details">
+          <div class="summary-row">
+            <span>Total Items</span>
+            <span>{{ cart.totalItem }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Total Price</span>
+            <span>₹{{ cart.totalPrice }}</span>
+          </div>
+          <div class="summary-row discount">
+            <span>Discount</span>
+            <span>-₹{{ cart.discount }}</span>
+          </div>
+          <div class="summary-row total">
+            <span>Final Price</span>
+            <span>₹{{ cart.totalDiscountedPrice }}</span>
+          </div>
+        </div>
+
+        <button class="checkout-btn">
+          Proceed to Checkout
+        </button>
+
+        <button class="continue-shopping" routerLink="/products">
+          Continue Shopping
+        </button>
+        <button class="clear-cart-btn" (click)="clearCart()" *ngIf="cart?.cartItems?.length">
+          Clear Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

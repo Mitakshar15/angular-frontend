@@ -32,7 +32,9 @@ export class ProductDetailComponent implements OnInit {
   quantity: number = 1;
   loading: boolean = true;
   error: string = '';
-
+  userRating: number = 0;
+  reviewTitle: string = '';
+  reviewContent: string = '';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -50,7 +52,8 @@ export class ProductDetailComponent implements OnInit {
       }
     });
   }
-
+  
+  
   private loadProduct(id: number) {
     this.loading = true;
     this.error = '';
