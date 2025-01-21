@@ -523,7 +523,7 @@ $error-color: #f44336;
     cursor: not-allowed;
     
     &:not(.added) {
-      background: darken($primary-color, 20%);
+      background: color-mix(in srgb, $primary-color 80%, black);
     }
   }
 

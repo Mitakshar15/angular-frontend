@@ -140,7 +140,7 @@ export class ProductDetailComponent implements OnInit {
         if (response.status.statusMessageKey === 'ERROR') {
           if (response.status.statusCode === 404 && 
               response.status.statusMessage === 'ITEM ALREDY EXISTS IN CART') {
-            this.existInCart = true;
+                this.existInCart = true;
             alert('This item already exists in your cart');
           } else {
             alert(response.status.statusMessage || 'Failed to add item to cart');

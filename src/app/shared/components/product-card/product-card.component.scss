@@ -40,6 +40,7 @@
     .product-image img {
       transform: scale(1.05);
     }
+    cursor: pointer;
   }
 
   .product-image {
@@ -120,6 +121,7 @@
 
       &:hover {
         color: var(--primary-color);
+        cursor: pointer;
       }
     }
 

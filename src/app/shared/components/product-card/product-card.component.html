@@ -1,4 +1,4 @@
-<div class="product-card">
+<div class="product-card" (click)="navigateToDetail()">
   <div class="product-image">
     <img [src]="product.imageUrl" [alt]="product.title">
     <!-- <div class="product-actions">
@@ -14,7 +14,7 @@
     </div> -->
   </div>
   
-  <div class="product-info" (click)="navigateToDetail()">
+  <div class="product-info" >
     <h3 class="product-name">{{product.title}}</h3>
     <p class="product-brand">{{product.brand}}</p>
     <div class="product-price">
