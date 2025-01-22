@@ -120,17 +120,20 @@
 <button 
   class="primary-btn" 
   (click)="addToCart()" 
-  [disabled]="addingToCart || existInCart"
+  [disabled]="addingToCart || existInCart || !isLoggedIn"
   [class.loading]="addingToCart && !existInCart"
   [class.added]="existInCart">
-  <ng-container *ngIf="!existInCart && !addingToCart">
+  <ng-container *ngIf="!isLoggedIn">
+    Please Login to Add to Cart
+  </ng-container>
+  <ng-container *ngIf="!existInCart && !addingToCart && isLoggedIn">
     Add to Cart
   </ng-container>
-  <ng-container *ngIf="addingToCart && !existInCart">
+  <ng-container *ngIf="addingToCart && !existInCart && isLoggedIn">
     <span class="loader"></span>
     Adding...
   </ng-container>
-  <ng-container *ngIf="existInCart">
+  <ng-container *ngIf="existInCart && isLoggedIn">
     <span class="check-icon">✓</span>
     Added to Cart
   </ng-container>

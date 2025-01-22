@@ -9,7 +9,7 @@ import { CartComponent } from './features/cart/cart.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'products', component: ProductsComponent },
-  { path: 'products/:category/:seconLevelCategory/:thirdLevelCategory', component: ProductsComponent },
+  { path: 'products/:category', component: ProductsComponent },
   // Add product detail route before the wildcard route
   { path: 'product/:id', component: ProductDetailComponent }, // Changed from 'product/:id' to 'products/:id'
   { 
@@ -17,11 +17,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/profile/profile.routes').then(m => m.PROFILE_ROUTES),
     canActivate: [authGuard]
   },
-  { path: 'women', component: ProductsComponent, data: { category: 'women' } },
-  { path: 'men', component: ProductsComponent, data: { category: 'men' } },
-  { path: 'accessories', component: ProductsComponent, data: { category: 'accessories' } },
-  { path: 'clothing', component: ProductsComponent, data: { category: 'clothing' } },
-  { path: 'kurta', component: ProductsComponent, data: { category: 'Kurta' } },
+  { path: 'women', component: ProductsComponent, data: { category: 'Women' } },
+  { path: 'men', component: ProductsComponent, data: { category: 'Men' } },
+  { path: 'accessories', component: ProductsComponent, data: { category: 'Accessories' } },
+  { path: 'new Arrivals', component: ProductsComponent, data: { category: 'New Arrivals' } },
+  { path: 'sale', component: ProductsComponent, data: { category: 'Sale' } },
   { path: 'auth', component: AuthComponent },
   {path:'cart',component: CartComponent},
   // Wildcard route should always be last
