@@ -14,10 +14,10 @@
     </div>
 
     <div class="navbar-menu">
-      <a routerLink="/products/Men/clothing/Kurta" class="nav-link">Women</a>
-      <a routerLink="/products/shirt/clothing/shirt" class="nav-link">Men</a>
-      <a routerLink="/products" class="nav-link">Accessories</a>
-      <a routerLink="/products" class="nav-link">New Arrivals</a>
+      <a routerLink="/products/Kurta" class="nav-link">Women</a>
+      <a routerLink="/products/Jeans" class="nav-link">Men</a>
+      <a routerLink="/products/Sale" class="nav-link">Accessories</a>
+      <a routerLink="/products/newArrivals" class="nav-link">New Arrivals</a>
       <a routerLink="/products" class="nav-link">Sale</a>
     </div>
 
@@ -45,7 +45,7 @@
       </ng-container>
 
       <!-- Show sign in button when user is not signed in -->
-      <button *ngIf="!isSignedIn" class="sign-in-button" (click)="signIn()" matRipple>
+      <button *ngIf="!isSignedIn" class="sign-in-button" routerLink="/" (click)="signIn()" matRipple>
         <i class="fas fa-sign-in-alt"></i>
         <span>Sign In</span>
       </button>

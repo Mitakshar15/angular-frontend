@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Product, ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
 import { CartApiResponse } from '../../core/interfaces/cart.types';
+import { AuthService } from '../../core/services/auth.service';
 
 
 interface ApiResponse {
@@ -39,15 +40,20 @@ export class ProductDetailComponent implements OnInit {
   reviewContent: string = '';
   addingToCart: boolean = false;
   existInCart: boolean = false;
+  isLoggedIn: boolean = false;
   
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService  // Adjust the import path
-  ) {}
+    private cartService: CartService,  // Adjust the import path
+    private authService: AuthService
+  ) {
+    this.isLoggedIn = this.authService.isAuthenticated();
+  }
 
   ngOnInit() {
+
     this.route.params.subscribe(params => {
       const productId = Number(params['id']);
       if (productId) {

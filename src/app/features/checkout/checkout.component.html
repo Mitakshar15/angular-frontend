@@ -1,0 +1,214 @@
+<!-- checkout.component.html -->
+<div class="checkout-container">
+    <!-- Progress Indicator -->
+    <div class="checkout-progress">
+      <div class="progress-step" [class.active]="currentStep >= 1">
+        <div class="step-number">1</div>
+        <div class="step-label">Delivery Address</div>
+      </div>
+      <div class="progress-line" [class.active]="currentStep >= 2"></div>
+      <div class="progress-step" [class.active]="currentStep >= 2">
+        <div class="step-number">2</div>
+        <div class="step-label">Order Review</div>
+      </div>
+    </div>
+  
+    <!-- Step 1: Address Selection -->
+    <div class="checkout-step" *ngIf="currentStep === 1">
+      <div class="address-section">
+        <!-- Address Selection -->
+        <div class="saved-addresses">
+          <div class="section-header">
+            <h3>Select Delivery Address</h3>
+            <span class="address-count">{{addresses.length}} Saved Addresses</span>
+          </div>
+          
+          <div class="address-grid">
+            <div class="address-card" *ngFor="let address of addresses" 
+                 [class.selected]="selectedAddress?.id === address.id"
+                 (click)="selectAddress(address)">
+              <div class="selection-indicator">
+                <div class="radio-outer">
+                  <div class="radio-inner" [class.active]="selectedAddress?.id === address.id"></div>
+                </div>
+              </div>
+              <div class="address-content">
+                <div class="name-badge">
+                  {{address.firstName.charAt(0)}}{{address.lastName.charAt(0)}}
+                </div>
+                <div class="address-details">
+                  <p class="name">{{address.firstName}} {{address.lastName}}</p>
+                  <p class="street">{{address.streetAddress}}</p>
+                  <p class="city-state">{{address.city}}, {{address.state}} {{address.zipCode}}</p>
+                  <p class="mobile">
+                    <i class="fas fa-phone"></i> {{address.mobile}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Add New Address Form -->
+        <div class="new-address-section">
+          <div class="new-address-holder">
+          <div class="section-header">
+            <h3>Add New Address</h3>
+          </div>
+          
+          <form [formGroup]="addressForm" (ngSubmit)="addNewAddress()" class="address-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" formControlName="firstName" placeholder="Enter first name">
+                <div class="error-message" *ngIf="addressForm.get('firstName')?.touched && addressForm.get('firstName')?.invalid">
+                  First name is required
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" formControlName="lastName" placeholder="Enter last name">
+                <div class="error-message" *ngIf="addressForm.get('lastName')?.touched && addressForm.get('lastName')?.invalid">
+                  Last name is required
+                </div>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label>Street Address</label>
+              <input type="text" formControlName="streetAddress" placeholder="Enter complete address">
+              <div class="error-message" *ngIf="addressForm.get('streetAddress')?.touched && addressForm.get('streetAddress')?.invalid">
+                Street address is required
+              </div>
+            </div>
+    
+            <div class="form-row three-columns">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" formControlName="city" placeholder="Enter city">
+                <div class="error-message" *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.invalid">
+                  City is required
+                </div>
+              </div>
+              <div class="form-group">
+                <label>State</label>
+                <input type="text" formControlName="state" placeholder="Enter state">
+                <div class="error-message" *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid">
+                  State is required
+                </div>
+              </div>
+              <div class="form-group">
+                <label>ZIP Code</label>
+                <input type="text" formControlName="zipCode" placeholder="Enter PIN code">
+                <div class="error-message" *ngIf="addressForm.get('zipCode')?.touched && addressForm.get('zipCode')?.invalid">
+                  Valid ZIP code is required
+                </div>
+              </div>
+            </div>
+    
+            <div class="form-group">
+              <label>Mobile Number</label>
+              <div class="phone-input">
+                <span class="country-code">+91</span>
+                <input type="tel" formControlName="mobile" placeholder="Enter mobile number">
+              </div>
+              <div class="error-message" *ngIf="addressForm.get('mobile')?.touched && addressForm.get('mobile')?.invalid">
+                Valid mobile number is required
+              </div>
+            </div>
+    
+            <div class="form-actions">
+              <button type="submit" class="btn-save" [disabled]="!addressForm.valid">
+                Save Address
+              </button>
+            </div>
+          </form>
+        </div>
+        </div>
+    
+        <!-- Continue Button -->
+        <div class="checkout-actions">
+          <button class="btn-continue" (click)="nextStep()" [disabled]="!selectedAddress">
+            <span>Continue to Order Review</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Step 2: Order Review -->
+<!-- Order Summary Page -->
+<div class="checkout-step" *ngIf="currentStep === 2">
+  <div class="order-review">
+    <!-- Left Section: Order Items -->
+    <div class="order-items-section">
+      <div class="section-header">
+        <h3>Order Summary</h3>
+        <span class="order-id">Order ID: {{order?.order_id}}</span>
+      </div>
+
+      <div class="order-items">
+        <div *ngFor="let item of order?.orderItemList" class="order-item">
+          <div class="item-image">
+            <img [src]="item.product.imageUrl" [alt]="item.product.title">
+          </div>
+          <div class="item-details">
+            <div class="item-info">
+              <h4>{{item.product.title}}</h4>
+              <p class="brand">{{item.product.brand}}</p>
+              <p class="color">Color: {{item.product.color}}</p>
+            </div>
+            <div class="item-quantity">
+              <span>Qty: {{item.quantity}}</span>
+            </div>
+            <div class="item-price">
+              <span class="original-price">₹{{item.price}}</span>
+              <span class="final-price">₹{{item.discountedPrice}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section: Price Details and Payment -->
+    <div class="order-summary-section">
+      <div class="price-details">
+        <h4>Price Details</h4>
+        <div class="price-row">
+          <span>Price ({{order?.totalItem}} items)</span>
+          <span>₹{{order?.totalPrice}}</span>
+        </div>
+        <div class="price-row discount">
+          <span>Discount</span>
+          <span>- ₹{{order?.discount}}</span>
+        </div>
+        <div class="price-row">
+          <span>Delivery Charges</span>
+          <span class="free">FREE</span>
+        </div>
+        <div class="price-row total">
+          <span>Total Amount</span>
+          <span>₹{{order?.totalDiscountedPrice}}</span>
+        </div>
+      </div>
+
+      <div class="delivery-address">
+        <h4>Delivery Address</h4>
+        <div class="address-details" *ngIf="order?.shippingAddress">
+          <p class="name">{{order?.shippingAddress?.firstName}} {{order?.shippingAddress?.lastName}}</p>
+          <p class="address">{{order?.shippingAddress?.streetAddress}}</p>
+          <p class="location">{{order?.shippingAddress?.city}}, {{order?.shippingAddress?.state}} - {{order?.shippingAddress?.zipCode}}</p>
+          <p class="phone">Phone: {{order?.shippingAddress?.mobile}}</p>
+        </div>
+      </div>
+
+      <div class="payment-action">
+        <button class="payment-button" routerLink="/cart">
+          <span>Proceed to Payment</span>
+          <span class="amount">₹{{order?.totalDiscountedPrice}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
