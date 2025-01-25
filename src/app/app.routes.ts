@@ -13,6 +13,11 @@ export const routes: Routes = [
   { path: 'products/:category', component: ProductsComponent, data: { renderMode: 'client' } },
   // Add product detail route before the wildcard route
   { path: 'product/:id', component: ProductDetailComponent , data: { renderMode: 'client' }}, // Changed from 'product/:id' to 'products/:id'
+  { 
+    path: 'profile', 
+    loadChildren: () => import('./features/profile/profile.routes').then(m => m.PROFILE_ROUTES),
+    canActivate: [authGuard]
+  },
   { path: 'women', component: ProductsComponent, data: { category: 'Women' } },
   { path: 'men', component: ProductsComponent, data: { category: 'Men' } },
   { path: 'accessories', component: ProductsComponent, data: { category: 'Accessories' } },
