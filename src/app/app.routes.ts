@@ -15,20 +15,9 @@ export const routes: Routes = [
   { 
     path: 'products/:category', 
     component: ProductsComponent,
-    providers: [
-      {
-        provide: 'getPrerenderParams',
-        useValue: () => {
-          return [
-            { category: 'women' },
-            { category: 'men' },
-            { category: 'accessories' },
-            { category: 'new-arrivals' },
-            { category: 'sale' }
-          ];
-        }
-      }
-    ]
+    data: { 
+      renderMode: 'client'  // Protected route, no prerendering needed
+    } 
   },// Changed from 'product/:id' to 'products/:id'
   { 
     path: 'profile', 
