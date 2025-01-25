@@ -10,19 +10,9 @@ import { CheckoutComponent } from './features/checkout/checkout.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'products', component: ProductsComponent },
+  { path: 'products/:category', component: ProductsComponent, data: { renderMode: 'client' } },
   // Add product detail route before the wildcard route
-  // { 
-  //   path: 'products/:category', 
-  //   component: ProductsComponent,
-  //   data: { 
-  //     renderMode: 'client'  // Protected route, no prerendering needed
-  //   } 
-  // },// Changed from 'product/:id' to 'products/:id'
-  { 
-    path: 'profile', 
-    loadChildren: () => import('./features/profile/profile.routes').then(m => m.PROFILE_ROUTES),
-    canActivate: [authGuard]
-  },
+  { path: 'product/:id', component: ProductDetailComponent , data: { renderMode: 'client' }}, // Changed from 'product/:id' to 'products/:id'
   { path: 'women', component: ProductsComponent, data: { category: 'Women' } },
   { path: 'men', component: ProductsComponent, data: { category: 'Men' } },
   { path: 'accessories', component: ProductsComponent, data: { category: 'Accessories' } },
