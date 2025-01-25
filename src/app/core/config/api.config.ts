@@ -34,6 +34,11 @@ export const API_CONFIG = {
         GET: (productId: number) => `/product/reviews/${productId}`,
         CREATE: '/product/reviews/create'
       }
+    },
+    ORDER: {
+      CREATE: '/user/order/create',
+      LIST: '/user/order/allOrders',
+      DETAILS: (orderId: number) => `/user/order/${orderId}`
     }
   }
 }; 

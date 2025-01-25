@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { CartDto, CartItemDto } from '../../core/interfaces/cart.types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -12,6 +13,7 @@ import { CartDto, CartItemDto } from '../../core/interfaces/cart.types';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
+  private router = inject(Router);
   cart: CartDto | null = null;
   loading = true;
   error: string | null = null;
@@ -171,6 +173,7 @@ export class CartComponent implements OnInit {
 
   proceedToCheckout(): void {
     // Implement checkout logic
+    this.router.navigate(['/checkout']);
     console.log('Proceeding to checkout...');
   }
 }
