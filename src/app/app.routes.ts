@@ -12,7 +12,24 @@ export const routes: Routes = [
   { path: 'products', component: ProductsComponent },
   { path: 'products/:category', component: ProductsComponent },
   // Add product detail route before the wildcard route
-  { path: 'product/:id', component: ProductDetailComponent }, // Changed from 'product/:id' to 'products/:id'
+  { 
+    path: 'products/:category', 
+    component: ProductsComponent,
+    providers: [
+      {
+        provide: 'getPrerenderParams',
+        useValue: () => {
+          return [
+            { category: 'women' },
+            { category: 'men' },
+            { category: 'accessories' },
+            { category: 'new-arrivals' },
+            { category: 'sale' }
+          ];
+        }
+      }
+    ]
+  },// Changed from 'product/:id' to 'products/:id'
   { 
     path: 'profile', 
     loadChildren: () => import('./features/profile/profile.routes').then(m => m.PROFILE_ROUTES),
