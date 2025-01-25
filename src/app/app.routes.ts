@@ -10,7 +10,6 @@ import { CheckoutComponent } from './features/checkout/checkout.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'products', component: ProductsComponent },
-  { path: 'products/:category', component: ProductsComponent },
   // Add product detail route before the wildcard route
   { 
     path: 'products/:category', 
