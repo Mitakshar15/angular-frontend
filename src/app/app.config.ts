@@ -5,6 +5,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,8 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor]),
       withFetch()
     ),
+    provideRouter(routes),
+    provideClientHydration(),
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: {
