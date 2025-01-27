@@ -19,7 +19,8 @@ export class ProductsComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 10;
   Math = Math;
-  
+  loading: boolean = true;
+
   activeFilters: ProductFilter = {
     category: '',
     color: [''],
@@ -78,6 +79,7 @@ export class ProductsComponent implements OnInit {
           }));
           this.totalItems = response.totalItems;
           this.currentPage = response.currentPage;
+          this.loading = false;
         },
         error: (error) => {
           console.error('Error loading products:', error);

@@ -25,7 +25,7 @@ export class CheckoutComponent implements OnInit {
   cartItems: any; // Your cart items
   userId: number | null = null;
   order: OrderDto | null = null;
-  loading: boolean  = false;
+  loading: boolean  = true;
   constructor(
     private _formBuilder: FormBuilder,
     private checkoutService: CheckoutService,
@@ -63,6 +63,7 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.getAllAddresses().subscribe({
       next: (response) => {
         this.addresses = response.data;
+        this.loading = false;
       },
       error: (error) => console.error('Error loading addresses:', error)
     });
@@ -91,7 +92,9 @@ export class CheckoutComponent implements OnInit {
   nextStep() {
     if (this.currentStep === 1 && this.selectedAddress) {
       this.currentStep = 2;
+      this.loading = true;
       this.createOrder();
+      
     }
   }
 

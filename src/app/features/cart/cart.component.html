@@ -65,13 +65,13 @@
               <div class="quantity-controls">
                 <button 
                   (click)="updateQuantity(item, -1)"
-                  [disabled]="item.quantity === 1">
+                  [disabled]="item.quantity === 1 || isQuantUpdated">
                   −
                 </button>
                 <span>{{ item.quantity }}</span>
                 <button 
                   (click)="updateQuantity(item, 1)"
-                  [disabled]="item.quantity === 10">
+                  [disabled]="item.quantity === 10 || isQuantUpdated">
                   +
                 </button>
               </div>
