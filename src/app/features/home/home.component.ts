@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { ProductCatalogComponent } from '../product-catalog/product-catalog.component';
 import { FeaturedCatalogComponent } from '../../shared/components/featured-catalog/featured-catalog.component';
@@ -14,6 +14,29 @@ import { Catalog } from '../../shared/models/catalog.model';
   imports: [CommonModule, CarouselModule, ProductCardComponent, ProductCatalogComponent, FeaturedCatalogComponent]
 })
 export class HomeComponent {
+  responsiveCarouselOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: true,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+    nav: false
+  };
   carouselOptions = {
     items: 1,
     nav: false,

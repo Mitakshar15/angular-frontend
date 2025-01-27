@@ -323,3 +323,134 @@
     }
   }
 }
+
+// Add to your existing styles
+@media screen and (max-width: 1024px) {
+  .home-container {
+    // Banner Section Responsiveness
+    .banner-section {
+      .banner-slide {
+        height: 350px !important;
+        
+        .banner-content {
+          width: 95%;
+          padding: var(--spacing-lg);
+          
+          h2 {
+            font-size: 1.8rem;
+          }
+          
+          p {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+
+    // Featured Catalogs Section
+    .featured-catalogs-section {
+      .featured-catalogs-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 0 var(--spacing-sm);
+      }
+    }
+
+    // Featured Products Section
+    .featured-section {
+      .featured-products {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+// Mobile-specific styles
+@media screen and (max-width: 768px) {
+  .home-container {
+    // Banner Section
+    .banner-section {
+      .banner-slide {
+        height: 250px !important;
+        
+        .banner-content {
+          width: 100%;
+          padding: var(--spacing-md);
+          
+          h2 {
+            font-size: 1.5rem;
+          }
+          
+          p {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+
+    // Section Headers
+    .section-header {
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    // Featured Catalogs
+    .featured-catalogs-section {
+      .featured-catalogs-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 var(--spacing-sm);
+      }
+    }
+
+    // Catalog Section
+    .catalog-section {
+      h2 {
+        font-size: 1.8rem;
+      }
+    }
+  }
+}
+
+// Ultra-small devices
+@media screen and (max-width: 480px) {
+  .home-container {
+    .banner-section {
+      .banner-slide {
+        height: 200px !important;
+        
+        .banner-content {
+          h2 {
+            font-size: 1.2rem;
+          }
+          
+          p {
+            font-size: 0.7rem;
+          }
+        }
+      }
+    }
+
+    // Adjust typography for smaller screens
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .section-header {
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

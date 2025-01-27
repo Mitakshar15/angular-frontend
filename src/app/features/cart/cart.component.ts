@@ -92,6 +92,7 @@ export class CartComponent implements OnInit {
             cartItems: sortedItems
           };
         }
+        this.isQuantUpdated = false;
       },
       error: (error) => {
         // Revert to previous state on error
