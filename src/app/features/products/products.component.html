@@ -1,13 +1,19 @@
 <div class="products-container">
+    <!-- Loading Screen -->
+    <div *ngIf="loading" class="loading-screen">
+      <div class="loader"></div>
+      <h3>Loading...</h3>
+      <p>Please wait while we fetch the products.</p>
+    </div>
   <!-- Filters Sidebar -->
-  <aside class="filters-sidebar">
+  <aside class="filters-sidebar"*ngIf="!loading">
     <div class="filters-header">
       <h3>Filters</h3>
       <button class="clear-filters" (click)="clearFilters()">Clear All</button>
     </div>
 
     <!-- Price Range Filter -->
-    <div class="filter-section">
+    <div class="filter-section"*ngIf="!loading">
       <h4>Price Range</h4>
       <div class="price-ranges">
         <div *ngFor="let range of priceRanges" class="price-range-option">
@@ -22,7 +28,7 @@
     </div>
 
     <!-- Color Filter -->
-    <div class="filter-section">
+    <div class="filter-section"*ngIf="!loading">
       <h4>Colors</h4>
       <div class="color-options">
         <div *ngFor="let color of availableColors" class="color-option">
@@ -36,7 +42,7 @@
     </div>
 
     <!-- Size Filter -->
-    <div class="filter-section">
+    <div class="filter-section"*ngIf="!loading">
       <h4>Sizes</h4>
       <div class="size-options">
         <div *ngFor="let size of availableSizes" class="size-option">
@@ -51,7 +57,7 @@
   </aside>
 
   <!-- Products Grid Section -->
-  <main class="products-main">
+  <main class="products-main"*ngIf="!loading">
     <!-- Sort and Results Info -->
     <div class="products-header">
       <div class="results-info">

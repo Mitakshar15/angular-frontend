@@ -19,7 +19,7 @@ export class CartComponent implements OnInit {
   error: string | null = null;
   cartItemsOrder: number[] = []; // To maintain item order
   isCartEmpty:boolean = false;
-
+  isQuantUpdated:boolean = false;
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
@@ -62,13 +62,14 @@ export class CartComponent implements OnInit {
   updateQuantity(item: CartItemDto, change: number): void {
     // Store current cart state
     const currentCart = this.cart;
-
+    this.isQuantUpdated = true;
     // Optimistically update the UI
     if (this.cart) {
       const updatedItems = this.cart.cartItems.map(cartItem => {
         if (cartItem.id === item.id) {
           return { ...cartItem, quantity: cartItem.quantity + change };
         }
+        this.isQuantUpdated = false;
         return cartItem;
       });
 

@@ -511,3 +511,50 @@ $shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05);
     gap: 0.5rem;
   }
 }
+.loading-screen {
+  position:fixed; /* Cover the entire viewport */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(173, 161, 161, 0.9); /* Light background with slight transparency */
+  z-index: 1000; /* Ensure it's above all other content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center; /* Center text */
+  box-shadow: 0 4px 20px rgba(139, 138, 138, 0.1); /* Subtle shadow for depth */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding around the content */
+}
+
+.loader {
+  border: 8px solid #e0e0e0; /* Light gray background */
+  border-top: 8px solid #007bff; /* Bootstrap primary blue color */
+  border-radius: 50%;
+  width: 60px; /* Size of the loader */
+  height: 60px; /* Size of the loader */
+  animation: spin 1s linear infinite; /* Spin animation */
+  margin-bottom: 15px; /* Space below loader */
+}
+
+/* Animation for spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+h3 {
+  font-size: 24px; /* Title size */
+  margin: 10px 0; /* Space above and below */
+  color: #333; /* Darker text color */
+  font-weight: 600; /* Bold text for emphasis */
+}
+
+p {
+  font-size: 16px; /* Description size */
+  color: #666; /* Medium gray color for better readability */
+  margin: 0;
+  line-height: 1.5; /* Improved line height for readability */
+}

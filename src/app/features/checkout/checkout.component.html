@@ -1,5 +1,16 @@
+    <!-- Loading Screen -->
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="loader"></div>
+    <p>Loading...</p>
+  </div>
+
 <!-- checkout.component.html -->
-<div class="checkout-container">
+<div class="checkout-container"*ngIf="!loading">
+
+
+   
+
     <!-- Progress Indicator -->
     <div class="checkout-progress">
       <div class="progress-step" [class.active]="currentStep >= 1">
