@@ -1,5 +1,6 @@
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:5454/v1',
+ // BASE_URL: 'http://localhost:5454/v1',
+  BASE_URL:'ecom-backend-api.railway.internal/v1',
   AUTH_TOKEN_KEY: 'auth_token',
   ENDPOINTS: {
     AUTH: {
