@@ -1,0 +1,111 @@
+<!-- order-details.component.html -->
+<div class="order-details-container">
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading order details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="goBack()">Go Back</button>
+  </div>
+
+  <!-- Order Details Content -->
+  <div class="order-content" *ngIf="!loading && !error && order">
+    <!-- Header -->
+    <div class="details-header">
+      <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>Order Details</h1>
+    </div>
+
+    <!-- Order Info Card -->
+    <mat-card class="order-info-card">
+      <div class="order-header">
+        <div class="order-number">
+          <h2>Order #{{ order.order_id }}</h2>
+          <span class="status-badge" [ngClass]="getStatusClass(order.orderStatus)">
+            <mat-icon>{{ getStatusIcon(order.orderStatus) }}</mat-icon>
+            {{ order.orderStatus }}
+          </span>
+        </div>
+        <p class="order-date">Ordered on {{ order.orderDate | date:'medium' }}</p>
+      </div>
+    </mat-card>
+
+    <!-- Main Content -->
+    <div class="details-grid">
+      <!-- Order Items -->
+      <mat-card class="items-card">
+        <mat-card-header>
+          <mat-card-title>Order Items</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="items-list">
+            <div class="item" *ngFor="let item of order.orderItemList">
+              <div class="item-image">
+                <img [src]="item.product.imageUrl" [alt]="item.product.title">
+              </div>
+              <div class="item-details">
+                <h3>{{ item.product.title }}</h3>
+                <p class="sku">SKU: {{ item.product.brand }}</p>
+                <div class="price-qty">
+                  <span class="price">${{ item.price }}</span>
+                  <span class="quantity">Qty: {{ item.quantity }}</span>
+                </div>
+              </div>
+              <div class="item-total">
+                ${{ item.price * item.quantity }}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Order Summary -->
+      <div class="summary-section">
+        <mat-card class="summary-card">
+          <mat-card-header>
+            <mat-card-title>Order Summary</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>${{ order.totalPrice }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span>$0.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax</span>
+              <span>$0.00</span>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>${{ order.totalDiscountedPrice }}</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="shipping-card">
+          <mat-card-header>
+            <mat-card-title>Shipping Address</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="name">{{ order.shippingAddress.firstName }}</p>
+            <p>{{ order.shippingAddress.streetAddress }}</p>
+            <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.state }}</p>
+            <p>{{ order.shippingAddress.zipCode }}</p>
+            <p>{{ order.shippingAddress.mobile }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

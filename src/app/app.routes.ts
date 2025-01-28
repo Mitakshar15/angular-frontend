@@ -6,6 +6,8 @@ import { authGuard } from './core/guards/auth.guard';
 import { ProductDetailComponent } from './features/product-detail/product.detail.component';
 import { CartComponent } from './features/cart/cart.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
+import { OrderHistoryComponent } from './features/orders/orders.component';
+import { OrderDetailsComponent } from './features/order-details/order-deails.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +28,10 @@ export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   {path:'cart',component: CartComponent},
   {path:'checkout', component: CheckoutComponent},
+  {path:'orders',component: OrderHistoryComponent},
+  {
+    path: 'order-details/:id',component: OrderDetailsComponent
+  },
   // Wildcard route should always be last
   { path: '**', redirectTo: '' }
 
