@@ -29,3 +29,13 @@ export interface OrderDto {
     price: number;
     discountedPrice: number;
   }
+
+  export interface OrderHistoryResponse {
+    respType: string;
+    status: {
+      statusCode: number;
+      statusMessage: string;
+      statusMessageKey: string;
+    };
+    order_history: OrderDto[];
+  }

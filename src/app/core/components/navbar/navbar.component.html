@@ -1,5 +1,10 @@
 <nav class="navbar">
   <div class="navbar-container">
+    <div class="mobile-hamburger" (click)="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <div class="navbar-brand">
       <a routerLink="/" class="logo">FASHION<span>HUB</span></a>
     </div>
@@ -29,7 +34,7 @@
           <i class="fas fa-user"></i>
           <span class="icon-label">Profile</span>
         </button>
-        <button class="icon-button" matRipple>
+        <button  routerLink="/orders"  class="icon-button" matRipple>
           <i class="far fa-heart"></i>
           <span class="icon-label">Wishlist</span>
         </button>
@@ -52,3 +57,30 @@
     </div>
   </div>
 </nav>
+
+<!-- Mobile Navigation Overlay -->
+<div class="mobile-navbar" [class.active]="isMobileMenuOpen">
+  <div class="mobile-navbar-header">
+    <a routerLink="/" class="logo">FASHION<span>HUB</span></a>
+    <button class="close-button" (click)="toggleMobileMenu()">
+      &times;
+    </button>
+  </div>
+
+  <div class="mobile-search-container" [class.active]="isMobileMenuOpen">
+    <div class="search-box">
+      <input type="text" placeholder="Search products..." class="search-input">
+      <button class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" [class.active]="isMobileMenuOpen">
+    <a routerLink="/products/Kurta" class="nav-link" (click)="toggleMobileMenu()">Women</a>
+    <a routerLink="/products/Jeans" class="nav-link" (click)="toggleMobileMenu()">Men</a>
+    <a routerLink="/products/Sale" class="nav-link" (click)="toggleMobileMenu()">Accessories</a>
+    <a routerLink="/products/newArrivals" class="nav-link" (click)="toggleMobileMenu()">New Arrivals</a>
+    <a routerLink="/products" class="nav-link" (click)="toggleMobileMenu()">Sale</a>
+  </div>
+</div>

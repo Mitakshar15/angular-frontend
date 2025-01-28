@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarComponent {
   cartItemCount = 0;
   isSignedIn = false;
+  isMobileMenuOpen = false;
 
   constructor(
     private dialog: MatDialog,
@@ -33,7 +34,10 @@ export class NavbarComponent {
       this.authService.loadUserProfile().subscribe();
     }
   }
-
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    document.body.classList.toggle('mobile-menu-open', this.isMobileMenuOpen);
+  }
   signIn() {
     const dialogRef = this.dialog.open(AuthComponent, {
       width: '400px',
@@ -50,5 +54,10 @@ export class NavbarComponent {
 
   signOut() {
     this.authService.logout();
+  }
+  
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    document.body.classList.remove('mobile-menu-open');
   }
 }

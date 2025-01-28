@@ -1,13 +1,21 @@
 <div class="home-container">
   <!-- Banner Carousel -->
+  <!-- Banner Carousel -->
   <section class="banner-section">
-    <owl-carousel-o [options]="carouselOptions">
+    <owl-carousel-o 
+      [options]="responsiveCarouselOptions" 
+      class="mobile-friendly-carousel"
+    >
       <ng-container *ngFor="let banner of banners">
         <ng-template carouselSlide>
-          <div class="banner-slide" [style.background-image]="'url(' + banner.image + ')'">
+          <div 
+            class="banner-slide" 
+            [style.background-image]="'url(' + banner.image + ')'"
+          >
             <div class="banner-content">
               <h2>{{ banner.title }}</h2>
               <p>{{ banner.subtitle }}</p>
+              <button class="btn btn-primary">Shop Now</button>
             </div>
           </div>
         </ng-template>
