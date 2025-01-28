@@ -558,3 +558,289 @@ p {
   margin: 0;
   line-height: 1.5; /* Improved line height for readability */
 }
+// Add these media queries at the end of your existing SCSS file
+
+@media screen and (max-width: 1024px) {
+  .products-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+    margin: 1rem auto;
+  }
+
+  .filters-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    max-height: 80vh;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    border-radius: 20px 20px 0 0;
+    overflow-y: auto;
+
+    &.active {
+      transform: translateY(0);
+    }
+
+    .filter-section {
+      padding: 1rem;
+
+      .price-ranges,
+      .color-options,
+      .size-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  .products-main {
+    .products-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+
+      .results-info {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+
+        span {
+          font-size: 0.7rem;
+          padding: 0.2rem 0.5rem;
+        }
+      }
+
+      .sort-section {
+        width: 100%;
+
+        label {
+          font-size: 0.8rem;
+        }
+
+        select {
+          width: 100%;
+          padding: 0.5rem;
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .empty-state {
+      padding: 2rem 1rem;
+
+      i {
+        font-size: 2rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      p {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .pagination-container {
+    padding: 1rem 0;
+  }
+
+  .pagination {
+    gap: 0.5rem;
+    padding: 0.3rem;
+
+    .pagination-btn {
+      padding: 0.3rem 0.5rem;
+      font-size: 0.8rem;
+
+      span {
+        display: none;
+      }
+
+      i {
+        font-size: 0.7rem;
+      }
+    }
+
+    .pagination-info {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .products-container {
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+  }
+
+  .filters-sidebar {
+    .filter-section {
+      padding: 0.75rem;
+
+      h4 {
+        font-size: 0.7rem;
+      }
+
+      .price-ranges,
+      .color-options,
+      .size-options {
+        gap: 0.3rem;
+      }
+
+      label {
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  .products-main {
+    .products-header {
+      padding: 0.75rem;
+
+      .results-info,
+      .sort-section {
+        font-size: 0.7rem;
+      }
+    }
+
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.5rem;
+    }
+  }
+
+  .loading-screen {
+    .loader {
+      width: 40px;
+      height: 40px;
+      border-width: 4px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (max-width: 1024px) {
+  .products-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+    margin: 1rem auto;
+  }
+
+  // Hide the sidebar by default on mobile
+  .filters-sidebar {
+    display: none;
+  }
+
+  // Add a filter button for mobile
+  .mobile-filter-button {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $accent-color;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+
+  // Filters modal for mobile
+  .filters-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 2000;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+
+    &.active {
+      display: block;
+    }
+
+    .filters-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid $border-color;
+
+      h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      .close-button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+    }
+
+    .filters-modal-content {
+      padding: 1rem;
+
+      .filter-section {
+        margin-bottom: 1.5rem;
+
+        h4 {
+          margin-bottom: 1rem;
+          font-size: 1rem;
+        }
+      }
+
+      .apply-filters-button {
+        width: 100%;
+        padding: 12px;
+        background-color: $accent-color;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
