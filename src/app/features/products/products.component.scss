@@ -19,7 +19,7 @@ $shadow-md: 0 1px 3px rgba(0, 0, 0, 0.05);
   margin: 2rem auto;
   padding: 1.5rem;
   min-height: 80vh;
-
+  position: static;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }

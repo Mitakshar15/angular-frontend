@@ -1,0 +1,86 @@
+<div class="order-history-page">
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="loader"></div>
+      <p>Loading your orders...</p>
+    </div>
+  
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error">
+      <div class="error-content">
+        <svg class="error-icon" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <h2>{{ error }}</h2>
+        <button class="retry-btn" (click)="loadOrders()">Try Again</button>
+      </div>
+    </div>
+  
+    <!-- Orders Content -->
+    <div class="orders-content" *ngIf="!loading && !error">
+      <div class="orders-header">
+        <h1>Order History</h1>
+        <p class="order-count">{{ orders.length }} orders placed</p>
+      </div>
+  
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="orders.length === 0">
+        <svg class="empty-icon" viewBox="0 0 24 24">
+          <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-7 3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm4 8H8v-.57c0-.81.48-1.53 1.22-1.85.85-.37 1.79-.58 2.78-.58.99 0 1.93.21 2.78.58.74.32 1.22 1.04 1.22 1.85V16z"/>
+        </svg>
+        <h2>No Orders Yet</h2>
+        <p>Looks like you haven't placed any orders yet.</p>
+        <button class="shop-now-btn" routerLink="/products">Start Shopping</button>
+      </div>
+  
+      <!-- Orders List -->
+      <div class="orders-list" *ngIf="orders.length > 0">
+        <div class="order-card" *ngFor="let order of orders">
+          <div class="order-header">
+            <div class="order-info">
+              <span class="order-id">Order #{{ order.order_id }}</span>
+              <span class="order-date">{{ formatDate(order.orderDate) }}</span>
+            </div>
+            <div class="order-status" [class]="getOrderStatusClass(order.orderStatus)">
+              {{ order.orderStatus }}
+            </div>
+          </div>
+  
+          <div class="order-items"[class.scrollable]="order.orderItemList.length > 3">
+            <div class="item" *ngFor="let item of order.orderItemList">
+              <img [src]="item.product.imageUrl" [alt]="item.product.title">
+              <div class="item-details">
+                <h3>{{ item.product.title }}</h3>
+                <p class="item-meta">
+                  <span class="brand">{{ item.product.brand }}</span>
+                  <span class="color">{{ item.product.color }}</span>
+                </p>
+                <p class="quantity">Qty: {{ item.quantity }}</p>
+                <p class="price">
+                  <span class="current-price">₹{{ item.discountedPrice }}</span>
+                  <span class="original-price" *ngIf="item.price !== item.discountedPrice">
+                    ₹{{ item.price }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="order-footer">
+            <div class="price-summary">
+              <span class="total-items">{{ order.totalItem }} items</span>
+              <span class="total-price">Total: ₹{{ order.totalDiscountedPrice }}</span>
+            </div>
+            <button class="view-details-btn" (click)="viewOrderDetails(order.id)">
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Order Details Modal -->
+    <div class="modal" *ngIf="selectedOrder">
+      <!-- Modal content here -->
+    </div>
+  </div>

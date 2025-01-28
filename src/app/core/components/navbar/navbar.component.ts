@@ -36,7 +36,7 @@ export class NavbarComponent {
   }
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    console.log("Toggle Mobile Menu",this.isMobileMenuOpen);
+    document.body.classList.toggle('mobile-menu-open', this.isMobileMenuOpen);
   }
   signIn() {
     const dialogRef = this.dialog.open(AuthComponent, {
@@ -54,5 +54,10 @@ export class NavbarComponent {
 
   signOut() {
     this.authService.logout();
+  }
+  
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    document.body.classList.remove('mobile-menu-open');
   }
 }
