@@ -112,11 +112,11 @@
   
                 <div class="order-items">
                   <div *ngFor="let item of order.orderItemList" class="order-item">
-                    <img [src]="item.product.imageUrl" [alt]="item.product.title">
+                    <img [src]="item.sku.product.imageUrl" [alt]="item.sku.product.title">
                     <div class="item-details">
-                      <h4>{{ item.product.title }}</h4>
-                      <p class="item-brand">{{ item.product.brand }}</p>
-                      <p class="item-color">Color: {{ item.product.color }}</p>
+                      <h4>{{ item.sku.product.title }}</h4>
+                      <p class="item-brand">{{ item.sku.product.brand }}</p>
+                      <p class="item-color">Color: {{ item.sku.color }}</p>
                       <div class="item-price">
                         <span class="quantity">Qty: {{ item.quantity }}</span>
                         <span class="price">{{ formatCurrency(item.price) }}</span>
@@ -184,10 +184,10 @@
               <mat-card *ngIf="currentCart?.cartItems?.length" class="cart-card">
                 <div class="cart-items">
                   <div *ngFor="let item of currentCart?.cartItems" class="cart-item">
-                    <img [src]="item.product.imageUrl" [alt]="item.product.title">
+                    <img [src]="item.sku.product.imageUrl" [alt]="item.sku.product.title">
                     <div class="item-details">
-                      <h4>{{ item.product.title }}</h4>
-                      <p class="item-brand">{{ item.product.brand }}</p>
+                      <h4>{{ item.sku.product.title }}</h4>
+                      <p class="item-brand">{{ item.sku.product.brand }}</p>
                       <p class="item-size">Size: {{ item.size }}</p>
                       <div class="item-controls">
                         <div class="quantity-controls">

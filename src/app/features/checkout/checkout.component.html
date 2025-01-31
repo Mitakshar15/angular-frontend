@@ -161,20 +161,20 @@
       <div class="order-items">
         <div *ngFor="let item of order?.orderItemList" class="order-item">
           <div class="item-image">
-            <img [src]="item.product.imageUrl" [alt]="item.product.title">
+            <img [src]="item.sku.product.imageUrl" [alt]="item.sku.product.title">
           </div>
           <div class="item-details">
             <div class="item-info">
-              <h4>{{item.product.title}}</h4>
-              <p class="brand">{{item.product.brand}}</p>
-              <p class="color">Color: {{item.product.color}}</p>
+              <h4>{{item.sku.product.title}}</h4>
+              <p class="brand">{{item.sku.product.brand}}</p>
+              <p class="color">Color: {{item.sku.color}}</p>
             </div>
             <div class="item-quantity">
               <span>Qty: {{item.quantity}}</span>
             </div>
             <div class="item-price">
-              <span class="original-price">₹{{item.price}}</span>
-              <span class="final-price">₹{{item.discountedPrice}}</span>
+              <span class="original-price">₹{{item.sku.price}}</span>
+              <span class="final-price">₹{{item.sku.discountedPrice}}</span>
             </div>
           </div>
         </div>

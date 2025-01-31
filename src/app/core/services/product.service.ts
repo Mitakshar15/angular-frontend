@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { API_CONFIG } from '../config/api.config';
+import { Sku } from '../../shared/models/product.model';
 
 export interface ProductCategory {
   name: string;
@@ -18,15 +19,11 @@ export interface Product {
   id: number;
   title: string;
   description: string;
-  price: number;
-  discountedPrice?: number;
-  discountPercent?: number;
   quantity?: number;
   brand: string;
-  color?: string;
-  sizes?: Size[];
   imageUrl: string;
   category?: ProductCategory;
+  skus:Sku[];
 }
 
 export interface ProductResponse {

@@ -6,6 +6,7 @@ import { Product, ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
 import { CartApiResponse } from '../../core/interfaces/cart.types';
 import { AuthService } from '../../core/services/auth.service';
+import { Sku } from '../../shared/models/product.model';
 
 
 interface ApiResponse {
@@ -41,7 +42,9 @@ export class ProductDetailComponent implements OnInit {
   addingToCart: boolean = false;
   existInCart: boolean = false;
   isLoggedIn: boolean = false;
-  
+  selectedSku:Sku |null = null;
+  selectedColor: string | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -53,7 +56,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
+  
     this.route.params.subscribe(params => {
       const productId = Number(params['id']);
       if (productId) {
@@ -65,6 +68,50 @@ export class ProductDetailComponent implements OnInit {
     });
   }
   
+  getUniqueColors(): string[] {
+  return [...new Set(this.product?.skus?.map(sku => sku.color))];
+}
+
+getAvailableSizes(): string[] {
+  return [
+    ...new Set(
+      this.product?.skus
+        ?.filter(sku => sku.color === this.selectedColor && sku.quantity > 0)
+        ?.map(sku => sku.size)
+    )
+  ];
+}
+
+isColorAvailable(color: string): boolean {
+  return this.product?.skus?.some(sku => sku.color === color && sku.quantity > 0)??false;
+}
+
+isSizeAvailable(size: string): boolean {
+  return this.product?.skus?.some(
+    sku => sku.color === this.selectedColor && sku.size === size && sku.quantity > 0
+  )??false;
+}
+
+selectColor(color: string): void {
+  this.selectedColor = color;
+  this.selectedSize = undefined;
+  this.updateSelectedSku();
+}
+
+selectSize(size: string): void {
+  this.selectedSize = size;
+  this.updateSelectedSku();
+}
+
+updateSelectedSku(): void {
+  if (this.selectedColor && this.selectedSize) {
+    this.selectedSku = this.product?.skus?.find(
+      sku => sku.color === this.selectedColor && sku.size === this.selectedSize
+    )??null;
+  } else {
+    this.selectedSku = null;
+  }
+}
   
   private loadProduct(id: number) {
     this.loading = true;
@@ -92,8 +139,9 @@ export class ProductDetailComponent implements OnInit {
   // Remove the setProduct method as it's unnecessary
 
   // Rest of your methods remain the same
-  onSizeSelect(size: string): void {
-    this.selectedSize = size;
+  onSizeSelect(sku:Sku): void {
+    this.selectedSize = sku.size;
+    this.selectedSku = sku;
   }
 
   updateQuantity(change: number): void {
@@ -133,10 +181,10 @@ export class ProductDetailComponent implements OnInit {
     this.addingToCart = true;
 
     const request = {
-      productId: this.product.id,
+      skuId: this.selectedSku?.id,
       size: this.selectedSize,
       quantity: this.quantity,
-      Price: this.product.discountedPrice || this.product.price
+      Price: this.product.skus[0].discountedPrice || this.product.skus[0].price
     };
 
     this.cartService.addToCart(request).subscribe({

@@ -40,6 +40,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     ::ng-deep .mat-mdc-tab-body-wrapper {
       padding: 1rem 0;
     }
+    
   `]
 })
 export class AuthComponent {
