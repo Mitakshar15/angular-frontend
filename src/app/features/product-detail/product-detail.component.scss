@@ -540,3 +540,114 @@ $error-color: #f44336;
 
 // Add to your variables
 $success-color: #4caf50; // or any color you prefer
+
+.color-grid {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 2px;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  
+  &.selected {
+    border-color: #000;
+  }
+  
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.color-swatch {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid #eee;
+}
+.variant-block {
+  margin-bottom: 20px;
+  
+  .variant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    
+    .label {
+      font-weight: 600;
+      color: #333;
+      font-size: 16px;
+    }
+    
+    .size-guide {
+      background-color: transparent;
+      border: 1px solid #888;
+      color: #666;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: #f4f4f4;
+        border-color: #555;
+      }
+    }
+  }
+  
+  .size-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    
+    .size-btn {
+      padding: 10px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover:not(.disabled) {
+        background-color: #f0f0f0;
+        border-color: #999;
+      }
+      
+      &.selected {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+      
+      &.disabled {
+        background-color: #f9f9f9;
+        color: #bbb;
+        cursor: not-allowed;
+        border-color: #e0e0e0;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+  .size-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .size-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -57,42 +57,63 @@
             </div>
           </div>
 
-          <div class="price-block">
-            <div class="price-wrapper">
-              <span class="current-price"
-                >₹{{ product.skus[0].discountedPrice || product.skus[0].price }}</span
-              >
-              <span class="original-price" *ngIf="product.skus[0].discountedPrice"
-                >₹{{ product.skus[0].price }}</span
-              >
-              <span class="discount" *ngIf="product.skus[0].discontPercent"
-                >{{ product.skus[0].discontPercent }}% off</span
-              >
-            </div>
-            <span class="tax-info">Inclusive of all taxes</span>
-          </div>
+<!-- Updated Price Block -->
+<div class="price-block">
+  <div class="price-wrapper">
+    <span class="current-price">
+      ₹{{ selectedSku ? (selectedSku.discountedPrice || selectedSku.price) : (product.skus[0].discountedPrice || product.skus[0].price) }}
+    </span>
+    <span class="original-price" *ngIf="selectedSku?.discountedPrice || product.skus[0].discountedPrice">
+      ₹{{ selectedSku ? selectedSku.price : product.skus[0].price }}
+    </span>
+    <span class="discount" *ngIf="selectedSku?.discontPercent || product.skus[0].discontPercent">
+      {{ (selectedSku ? selectedSku.discontPercent : product.skus[0].discontPercent) }}% off
+    </span>
+  </div>
+  <span class="tax-info">Inclusive of all taxes</span>
+</div>
 
-          <div class="size-block" *ngIf="product.skus[0].size?.length">
-            <div class="size-header">
-              <span class="label">Select Size</span>
-              <button class="size-guide">Size Guide</button>
-            </div>
-            <div class="size-grid">
-              <button
-              [disabled]="addingToCart || existInCart"
-                *ngFor="let sku of product.skus"
-                class="size-btn"
-                [class.selected]="selectedSize === sku.size"
-                [class.selected]="selectedSku === sku"
-                [class.disabled]="sku.quantity === 0"
-                [disabled]="sku.quantity === 0"
-                (click)="onSizeSelect(sku)"
-              >
-                {{ sku.size }}
-              </button>
-              
-            </div>
-          </div>
+<!-- Replace the size-block with this variant selector -->
+<div class="variants-section">
+  <!-- Color Selection -->
+  <div class="variant-block" *ngIf="product?.skus">
+    <div class="variant-header">
+      <span class="label">Select Color</span>
+    </div>
+    <div class="color-grid">
+      <button
+        *ngFor="let color of getUniqueColors()"
+        class="color-btn"
+        [class.selected]="selectedColor === color"
+        [class.disabled]="!isColorAvailable(color)"
+        [disabled]="!isColorAvailable(color)"
+        (click)="selectColor(color)"
+      >
+        <span class="color-swatch" [style.backgroundColor]="color"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Size Selection -->
+  <div class="variant-block" *ngIf="selectedColor">
+    <div class="variant-header">
+      <span class="label">Select Size</span>
+      <button class="size-guide">Size Guide</button>
+    </div>
+    <div class="size-grid">
+      <button
+        *ngFor="let size of getAvailableSizes()"
+        class="size-btn"
+        [class.selected]="selectedSize === size"
+        [class.disabled]="!isSizeAvailable(size)"
+        [disabled]="!isSizeAvailable(size) || addingToCart || existInCart"
+        (click)="selectSize(size)"
+      >
+        {{ size }}
+      </button>
+    </div>
+  </div>
+</div>
 
           <div class="quantity-block">
             <span class="label">Quantity</span>

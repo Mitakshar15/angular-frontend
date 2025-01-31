@@ -43,6 +43,8 @@ export class ProductDetailComponent implements OnInit {
   existInCart: boolean = false;
   isLoggedIn: boolean = false;
   selectedSku:Sku |null = null;
+  selectedColor: string | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -66,7 +68,50 @@ export class ProductDetailComponent implements OnInit {
     });
   }
   
-  
+  getUniqueColors(): string[] {
+  return [...new Set(this.product?.skus?.map(sku => sku.color))];
+}
+
+getAvailableSizes(): string[] {
+  return [
+    ...new Set(
+      this.product?.skus
+        ?.filter(sku => sku.color === this.selectedColor && sku.quantity > 0)
+        ?.map(sku => sku.size)
+    )
+  ];
+}
+
+isColorAvailable(color: string): boolean {
+  return this.product?.skus?.some(sku => sku.color === color && sku.quantity > 0)??false;
+}
+
+isSizeAvailable(size: string): boolean {
+  return this.product?.skus?.some(
+    sku => sku.color === this.selectedColor && sku.size === size && sku.quantity > 0
+  )??false;
+}
+
+selectColor(color: string): void {
+  this.selectedColor = color;
+  this.selectedSize = undefined;
+  this.updateSelectedSku();
+}
+
+selectSize(size: string): void {
+  this.selectedSize = size;
+  this.updateSelectedSku();
+}
+
+updateSelectedSku(): void {
+  if (this.selectedColor && this.selectedSize) {
+    this.selectedSku = this.product?.skus?.find(
+      sku => sku.color === this.selectedColor && sku.size === this.selectedSize
+    )??null;
+  } else {
+    this.selectedSku = null;
+  }
+}
   
   private loadProduct(id: number) {
     this.loading = true;
