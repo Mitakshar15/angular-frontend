@@ -72,10 +72,10 @@ export class ProductsComponent implements OnInit {
             id: p.id,
             title: p.title,
             description: p.description,
-            price: p.discountedPrice || p.price,
+            price: p.skus[0].discountedPrice || p.skus[0].price,
             imageUrl: p.imageUrl,
             brand: p.brand,
-            originalPrice: p.price
+            skus:p.skus
           }));
           this.totalItems = response.totalItems;
           this.currentPage = response.currentPage;

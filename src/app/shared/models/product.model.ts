@@ -5,5 +5,16 @@ export interface Product {
   price: number;
   imageUrl: string;
   brand: string;
-  originalPrice?: number;  // Optional property for sale items
+  skus: Sku[];// Optional property for sale items
 } 
+
+export interface Sku{
+  id: number;
+  color: string;
+  discontPercent: number;
+  discountedPrice: number;
+  price: number;
+  quantity: number;
+  size: string;
+  skuCode: string;
+}

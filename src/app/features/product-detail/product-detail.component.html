@@ -60,19 +60,19 @@
           <div class="price-block">
             <div class="price-wrapper">
               <span class="current-price"
-                >₹{{ product.discountedPrice || product.price }}</span
+                >₹{{ product.skus[0].discountedPrice || product.skus[0].price }}</span
               >
-              <span class="original-price" *ngIf="product.discountedPrice"
-                >₹{{ product.price }}</span
+              <span class="original-price" *ngIf="product.skus[0].discountedPrice"
+                >₹{{ product.skus[0].price }}</span
               >
-              <span class="discount" *ngIf="product.discountPercent"
-                >{{ product.discountPercent }}% off</span
+              <span class="discount" *ngIf="product.skus[0].discontPercent"
+                >{{ product.skus[0].discontPercent }}% off</span
               >
             </div>
             <span class="tax-info">Inclusive of all taxes</span>
           </div>
 
-          <div class="size-block" *ngIf="product.sizes?.length">
+          <div class="size-block" *ngIf="product.skus[0].size?.length">
             <div class="size-header">
               <span class="label">Select Size</span>
               <button class="size-guide">Size Guide</button>
@@ -80,15 +80,17 @@
             <div class="size-grid">
               <button
               [disabled]="addingToCart || existInCart"
-                *ngFor="let size of product.sizes"
+                *ngFor="let sku of product.skus"
                 class="size-btn"
-                [class.selected]="selectedSize === size.name"
-                [class.disabled]="size.quantity === 0"
-                [disabled]="size.quantity === 0"
-                (click)="onSizeSelect(size.name)"
+                [class.selected]="selectedSize === sku.size"
+                [class.selected]="selectedSku === sku"
+                [class.disabled]="sku.quantity === 0"
+                [disabled]="sku.quantity === 0"
+                (click)="onSizeSelect(sku)"
               >
-                {{ size.name }}
+                {{ sku.size }}
               </button>
+              
             </div>
           </div>
 

@@ -18,8 +18,8 @@
     <h3 class="product-name">{{product.title}}</h3>
     <p class="product-brand">{{product.brand}}</p>
     <div class="product-price">
-      <span class="current-price">${{product.price}}</span>
-      <span class="original-price" *ngIf="product.originalPrice">${{product.originalPrice}}</span>
+      <span class="current-price">${{product.skus[0].price}}</span>
+      <span class="original-price" *ngIf="product.skus[0].price">${{product.skus[0].price}}</span>
     </div>
   </div>
 </div>

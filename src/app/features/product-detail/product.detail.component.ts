@@ -6,6 +6,7 @@ import { Product, ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
 import { CartApiResponse } from '../../core/interfaces/cart.types';
 import { AuthService } from '../../core/services/auth.service';
+import { Sku } from '../../shared/models/product.model';
 
 
 interface ApiResponse {
@@ -41,7 +42,7 @@ export class ProductDetailComponent implements OnInit {
   addingToCart: boolean = false;
   existInCart: boolean = false;
   isLoggedIn: boolean = false;
-  
+  selectedSku:Sku |null = null;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -53,7 +54,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
+  
     this.route.params.subscribe(params => {
       const productId = Number(params['id']);
       if (productId) {
@@ -64,6 +65,7 @@ export class ProductDetailComponent implements OnInit {
       }
     });
   }
+  
   
   
   private loadProduct(id: number) {
@@ -92,8 +94,9 @@ export class ProductDetailComponent implements OnInit {
   // Remove the setProduct method as it's unnecessary
 
   // Rest of your methods remain the same
-  onSizeSelect(size: string): void {
-    this.selectedSize = size;
+  onSizeSelect(sku:Sku): void {
+    this.selectedSize = sku.size;
+    this.selectedSku = sku;
   }
 
   updateQuantity(change: number): void {
@@ -133,10 +136,10 @@ export class ProductDetailComponent implements OnInit {
     this.addingToCart = true;
 
     const request = {
-      productId: this.product.id,
+      skuId: this.selectedSku?.id,
       size: this.selectedSize,
       quantity: this.quantity,
-      Price: this.product.discountedPrice || this.product.price
+      Price: this.product.skus[0].discountedPrice || this.product.skus[0].price
     };
 
     this.cartService.addToCart(request).subscribe({

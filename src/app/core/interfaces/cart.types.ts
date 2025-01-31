@@ -35,7 +35,7 @@ export interface CartResponse {
   }
 
   export interface AddItemToCartRequest {
-    productId: number;
+    skuId: number|undefined;
     size: string;
     quantity: number;
     Price: number;  // Note: Keeping the capital 'P' as per API spec
@@ -55,7 +55,7 @@ export interface ApiResponse {
   data?: any;
 }
 export interface AddItemToCartRequest {
-  productId: number;
+  skuId: number|undefined;
   size: string;
   quantity: number;
   Price: number;
