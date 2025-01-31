@@ -18,7 +18,7 @@ export interface CartResponse {
   
   export interface CartItemDto {
     id: number;
-    product: CartItemProductDto;
+    sku: CartSkuDto;
     size: string;
     quantity: number;
     price: number;
@@ -63,4 +63,23 @@ export interface AddItemToCartRequest {
 
 export interface CartApiResponse extends BaseApiResponse {
   data?: CartDto;
+}
+export interface CartSkuDto{
+   id:number;
+   skuCode: string;
+   color: string;
+   price: number;
+   size: string;
+   discountedPrice: number;
+   discountPercent: number;
+   product:SkuProductDto;
+
+}
+
+export interface SkuProductDto{
+
+  imageUrl:string;
+  brand:string;
+  title:string;
+  description:string;
 }

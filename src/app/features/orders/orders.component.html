@@ -48,12 +48,12 @@
   
           <div class="order-items"[class.scrollable]="order.orderItemList.length > 3">
             <div class="item" *ngFor="let item of order.orderItemList">
-              <img [src]="item.product.imageUrl" [alt]="item.product.title">
+              <img [src]="item.sku.product.imageUrl" [alt]="item.sku.product.title">
               <div class="item-details">
-                <h3>{{ item.product.title }}</h3>
+                <h3>{{ item.sku.product.title }}</h3>
                 <p class="item-meta">
-                  <span class="brand">{{ item.product.brand }}</span>
-                  <span class="color">{{ item.product.color }}</span>
+                  <span class="brand">{{ item.sku.product.brand }}</span>
+                  <span class="color">{{ item.sku.color }}</span>
                 </p>
                 <p class="quantity">Qty: {{ item.quantity }}</p>
                 <p class="price">

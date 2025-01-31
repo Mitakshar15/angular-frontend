@@ -40,17 +40,17 @@
       <div class="cart-items">
         <div class="cart-item" *ngFor="let item of cart.cartItems">
           <div class="item-image">
-            <img [src]="item.product.imageUrl" [alt]="item.product.title">
+            <img [src]="item.sku.product.imageUrl" [alt]="item.sku.product.title">
           </div>
 
           <div class="item-details">
             <div class="item-header">
-              <h3>{{ item.product.title }}</h3>
+              <h3>{{ item.sku.product.title }}</h3>
               <div class="brand-color">
-                <span class="brand">{{ item.product.brand }}</span>
-                <span class="color">{{ item.product.color }}</span>
+                <span class="brand">{{ item.sku.product.brand }}</span>
+                <span class="color">{{ item.sku.color }}</span>
               </div>
-              <span class="size">Size: {{ item.size }}</span>
+              <span class="size">Size: {{ item.sku.size }}</span>
             </div>
 
             <div class="item-pricing">

@@ -347,3 +347,13 @@ $text-secondary: #666;
     }
   }
 }
+.clear-cart-btn{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: none;
+  color: $error-color;
+  cursor: pointer;
+  padding: 4px;
+}

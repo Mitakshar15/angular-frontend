@@ -1,4 +1,5 @@
 import { Address } from "./address.interface";
+import { SkuProductDto } from "./cart.types";
 
 export interface OrderDto {
     id: number;
@@ -18,13 +19,7 @@ export interface OrderDto {
   
  export interface OrderItemDTO {
     id: number;
-    product: {
-      id: number;
-      title: string;
-      brand: string;
-      color: string;
-      imageUrl: string;
-    };
+    sku: OrderSkuDto;
     quantity: number;
     price: number;
     discountedPrice: number;
@@ -38,4 +33,15 @@ export interface OrderDto {
       statusMessageKey: string;
     };
     order_history: OrderDto[];
+  }
+
+  export interface OrderSkuDto{
+   id:number;
+   skuCode: string;
+   color: string;
+   price: number;
+   size: string;
+   discountedPrice: number;
+   discountPercent: number;
+   product:SkuProductDto;
   }

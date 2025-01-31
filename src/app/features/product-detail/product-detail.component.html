@@ -75,6 +75,9 @@
 
 <!-- Replace the size-block with this variant selector -->
 <div class="variants-section">
+    <span *ngIf="selectedSku?.skuCode">
+      <strong>SKU:</strong> {{ selectedSku?.skuCode }}
+    </span>
   <!-- Color Selection -->
   <div class="variant-block" *ngIf="product?.skus">
     <div class="variant-header">
@@ -93,7 +96,6 @@
       </button>
     </div>
   </div>
-
   <!-- Size Selection -->
   <div class="variant-block" *ngIf="selectedColor">
     <div class="variant-header">
