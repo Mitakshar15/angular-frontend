@@ -1,6 +1,6 @@
 export const API_CONFIG = {
  // BASE_URL: 'http://localhost:5454/v1',
-  BASE_URL:'https://ecom-backend-api-production.up.railway.app/v1',
+  BASE_URL:'https://ecom-api-ecomapi-1.onrender.com/v1',
   AUTH_TOKEN_KEY: 'auth_token',
   ENDPOINTS: {
     AUTH: {
